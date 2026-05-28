@@ -125,7 +125,6 @@ const backgroundScene = document.querySelector(".main-background-video");
 const starsBackground = document.querySelector("#stars-background-main");
 const seccionAjustes = document.querySelector("#settings-banner");
 const btnAjustes = document.querySelector("#btn-ajustes");
-const btnLetter = document.querySelector("#btn-carta");
 const btnStory = document.querySelector("#btn-story");
 const btnLogs = document.querySelector("#btn-logs");
 const inOutElements = document.querySelectorAll(".inout");
@@ -156,6 +155,7 @@ const btnCloseLogs = document.querySelector("#btn-close-logs");
 const gameVersionLogs = document.querySelector("#game-version-logs");
 const logsNotifDot = document.querySelector("#logs-notif-dot");
 const lastUpdateDot = document.querySelector(".log-dot");
+const greetingsGuide = document.querySelector("#greetings-guide");
 
 // Variables del menú de historia de Helea
 
@@ -470,22 +470,9 @@ const levelInstructions = {
 const initialGuideTxts = [
     'Accede al menú de <span class="marked-txt">Archivos de Helea</span> para conocer más sobre la historia del planeta.',
     'Accede al menú de <span class="marked-txt">Estado de Helea</span> para conocer tu progreso en el juego e informarte sobre la situación actual del planeta.',
-    'Accede al menú de <span class="marked-txt">Llave del tesoro</span> para abrir un cofre muy especial y descubrir los secretos que esconde.',
     'Accede al menú de <span class="marked-txt">Ajustes</span> para modificar la configuración del juego a tu gusto o empezar una nueva partida desde cero.',
     '¡Pulsa el botón de <span class="marked-txt">Jugar</span> para acceder al menú de niveles del juego y empezar el desafío!',
 ];
-// Variables del cofre
-
-const btnAbrirCofre = document.querySelector("#abrir-cofre");
-const llaveCofre = document.querySelector("#llave-cofre");
-const instruccionesCofre = document.querySelector("#instrucciones-cofre");
-const efectoLuz = document.querySelector("#light-effect");
-const cofreTesoro = document.querySelector("#cofre-tesoro");
-const sombraCofre = document.querySelector("#sombra-cofre");
-const luzCofre = document.querySelector("#luz-cofre");
-const audioWaves = [...document.querySelectorAll(".audio-wave")];
-const iconsPlayPause = document.querySelectorAll(".btn-playpause");
-const activeWaveIntervals = {};
 
 // Variables del progreso de Helea
 
@@ -551,7 +538,6 @@ let setInitialGuide = false; // Control sobre la guía inicial --> ¿aparecerá 
 let guideProgress = 0; // Progreso de los textos de la guía
 let openedInitialGuide = false; // Guía de inicio abierta?
 let openedAjustes = false; // Menú de ajustes abierto?
-let openedLetter = false; // Menú de carta abierto?
 let openedNiveles = false; // Menú de niveles abierto?
 let openedLevelInstructions = false; // Instrucciones de niveles abierto?
 let openedHeleaState = false; // Menú de estado de Helea abierto?
@@ -1474,8 +1460,6 @@ const mainMenuElements = [
     "/media/img/planets/planet8.png",
 
     "/media/img/airaak.png",
-    "/media/img/cofre.webp",
-    "/media/img/cofre-abierto.png",
     "/media/img/helea-planet.png",
     "/media/img/helea-state1.png",
     "/media/img/helea-state2.png",
@@ -3185,16 +3169,19 @@ function iniciarMenuPrincipal() {
         case "male":
             imgCharacter.src = "/media/img/male-character/male_fullbody.png";
             characterLevelsUI.src = "/media/img/male-character/male_fullbody.png";
+            greetingsGuide.textContent = "¡BIENVENIDO A HELEA!";
             break;
 
         case "female":
             imgCharacter.src = "/media/img/female-character/female_fullbody.png";
             characterLevelsUI.src = "/media/img/female-character/female_fullbody.png";
+            greetingsGuide.textContent = "¡BIENVENIDA A HELEA!";
             break;
 
         case "nobinary":
             imgCharacter.src = "/media/img/non-binary-character/nobinary_fullbody.png";
             characterLevelsUI.src = "/media/img/non-binary-character/nobinary_fullbody.png";
+            greetingsGuide.textContent = "¡BIENVENIDE A HELEA!";
             break;
     
         default:
@@ -4610,20 +4597,13 @@ function changeInstructionsGuide() {
             break;
 
         case 3:
-            btnLetter.classList.add("active-in-guide");
-            btnLetter.classList.remove("semi-invisible");
-            instructionsGuideContainer.style.justifyContent = "flex-start";
-            instructionsGuide.style.textAlign = "left";
-            break;
-
-        case 4:
             btnAjustes.classList.add("active-in-guide");
             btnAjustes.classList.remove("semi-invisible");
             instructionsGuideContainer.style.justifyContent = "flex-start";
             instructionsGuide.style.textAlign = "left";
             break;
 
-        case 5:
+        case 4:
             btnJugar.classList.remove("semi-invisible");
             btnJugar.classList.add("active-in-guide");
             instructionsGuideContainer.style.justifyContent = "center";
@@ -5770,239 +5750,7 @@ btnGolevelsConfirm.addEventListener("click", () => {
     };
 });
 
-// Abrir-cerrar carta de cumpleaños
-
-btnLetter.addEventListener("click", () => {
-
-    if(openedInitialGuide) return;
-
-    openedLetter = !openedLetter;
-
-    if(openedLetter) { // Cuando se abre el menú de carta
-
-        AudioManager.playSound(selectSound2);
-
-        inOutElements.forEach(element => { // Desaparecen los elementos innecesarios
-            hideUp(element);
-            imgCharacter.classList.add("hidden");
-        });
-
-        textoFooter.classList.add("hidden");
-
-        setTimeout(() => {
-            characterMain.classList.toggle("zoom"); // Se hace zoom in a la luna
-            showUp(cofreTesoro); // Se muestra el cofre del tesoro (fuera de la pantalla)
-            AudioManager.fadeChangeMusic(openChestWaiting); // Empieza a sonar la música de menú de cofre
-        }, 1000);
-
-        setTimeout(() => {
-            btnAbrirCofre.classList.remove("disappear");
-            showUp(llaveCofre);
-            caerCofre();
-            subtituloPrincipal.textContent = "Tienes un";
-            tituloPrincipal.textContent = "Regalo";
-
-            showUp(sombraCofre);
-
-            showUp(btnAbrirCofre);
-            instruccionesCofre.style.opacity = 1;
-            showUp(mainHeader);
-        }, 1050);        
-
-    }else if(!openedLetter) { // Cuando se cierra el menú de carta
-
-        AudioManager.playSound(selectSound);
-        AudioManager.stopMusic(openChestWaiting);
-        
-        iconsPlayPause.forEach(btn => { // Se detienen y se reinician todos los audios
-            
-            const person = btn.dataset.person;
-            const icon = btn.querySelector("img");
-            const audio = personAudios[person];
-
-            
-            stopAllAnimations(); // Se detienen las animaciones de ondas
-
-            if (currentPersonAudio) {
-                currentPersonAudio.pause();
-                currentPersonAudio.currentTime = 0;
-                currentPersonAudio = null;
-            }
-
-            icon.src = "/media/icons/icon-play.png";
-        });
-
-        mainHeader.classList.remove("reduct-margintop");
-
-        hideUp(cofreTesoro); // Desaparecen los elementos innecesarios
-        hideUp(mainHeader);
-        hideUp(btnLetter);
-        hideUp(menuAudiosBirthday);
-        hideUp(luzCofre);
-
-        setTimeout(() => {
-            resetElements(); // Se resetea el estado de los elementos
-        }, 500);
-        
-        moon.style.opacity = 1;
-        characterMain.classList.toggle("zoom"); // Se hace zoom out a la luna
-        iconoLlave.src = "media/icons/icono-llave.png"; // Cambia el icono --> llave
-
-        setTimeout(() => { // Aparecen todos los elementos del menú principal
-            AudioManager.playMusic(menuMusic);
-
-            inOutElements.forEach(element => {
-                subtituloPrincipal.textContent = "Una aventura espacial";
-                tituloPrincipal.textContent = "Welcome to Helea";
-                showUp(element);
-            });
-
-            imgCharacter.classList.remove("hidden");
-            textoFooter.classList.remove("hidden");
-        }, 800);
-    };
-});
-
-btnAbrirCofre.addEventListener("click", () => { // Cuando se abre el cofre
-
-    AudioManager.playSound(selectSound2);
-
-    cofreTesoro.classList.remove("rebotando"); // El cofre cae al suelo y deja de rebotar
-    sombraCofre.classList.remove("rebotando");
-    sombraCofre.classList.add("hidden"); // Se quita la sombra del cofre
-    cofreTesoro.classList.add("abriendo");
-    instruccionesCofre.style.opacity = 0;
-    btnAbrirCofre.classList.add("disappear");
-
-    setTimeout(() => {
-        llaveCofre.classList.add("cayendo"); // Cae la llave
-        showUp(luzCofre);
-        AudioManager.playSound(openChestSound);
-        AudioManager.stopMusic(openChestWaiting);
-    }, 1000);
-
-    setTimeout(() => {
-        luzCofre.classList.add("shine"); // Aparece el brillo del cofre
-    }, 1400);
-
-    setTimeout(() => {
-        hideUp(llaveCofre); // Se oculta la llave del cofre
-        moon.style.opacity = 0; // Se oculta la luna
-        subtituloPrincipal.textContent = "Mensajes";
-        tituloPrincipal.textContent = "espaciales";
-    }, 2000);
-
-    setTimeout(() => {
-        luzCofre.classList.remove("shine"); // Desaparece el brillo del cofre
-        iconoLlave.src = "media/icons/icon-back.png";
-        btnLetter.classList.add("add-margin");
-        hideUp(cofreTesoro);
-    }, 2500);
-
-    setTimeout(() => {
-        mainHeader.classList.add("reduct-margintop");
-        showUp(btnLetter);
-        showUp(menuAudiosBirthday);
-    }, 2800);
-});
-
-function caerCofre() {
-    cofreTesoro.classList.add("cayendo");
-    sombraCofre.classList.add("cayendo");
-    
-    setTimeout(() => {
-        cofreTesoro.classList.remove("cayendo");
-        sombraCofre.classList.remove("cayendo");
-        cofreTesoro.classList.add("rebotando");
-        sombraCofre.classList.add("rebotando");
-    }, 1200);
-};
-
-iconsPlayPause.forEach(btn => {
-    btn.addEventListener("click", () => {
-        const person = btn.dataset.person;
-        const icon = btn.querySelector("img");
-        const path = personAudios[person];
-
-        if(activeWaveIntervals[person]) {
-            stopAllAnimations();
-            
-            if (currentPersonAudio) {
-                currentPersonAudio.pause();
-                currentPersonAudio.currentTime = 0;
-                currentPersonAudio = null;
-            }
-        }else {
-            stopAllAnimations();
-
-            if(currentPersonAudio) {
-                currentPersonAudio.pause();
-                currentPersonAudio.currentTime = 0;
-            }
-
-            currentPersonAudio = new Audio(path);
-
-            AudioManager.playSound(currentPersonAudio);
-
-            activeWaveIntervals[person] = setInterval(() => {
-                moveAudioWaves(person);
-            }, 200);
-
-            icon.src = "/media/icons/icon-pause.png";
-
-            currentPersonAudio.onended = () => {
-                stopAllAnimations();
-            };
-        }
-    });
-});
-
-function stopAllAnimations() {
-
-    Object.keys(activeWaveIntervals).forEach(p => {
-        clearInterval(activeWaveIntervals[p]);
-        delete activeWaveIntervals[p];
-    });
-
-    iconsPlayPause.forEach(btn => {
-        const icon = btn.querySelector("img");
-        icon.src = "/media/icons/icon-play.png";
-    });
-};
-
-function moveAudioWaves(personid) {
-
-    const filteredWaves = audioWaves.filter(wave => wave.classList.contains(personid));
-
-    filteredWaves.forEach(wave => {
-        if(wave.classList.contains("small")) {
-            wave.classList.remove("small");
-            wave.classList.add("medium");
-
-        }else if(wave.classList.contains("medium")) {
-            wave.classList.remove("medium");
-            wave.classList.add("big");
-
-        }else if(wave.classList.contains("big")) {
-            wave.classList.remove("big");
-            wave.classList.add("small");
-        }
-    });
-};
-
 // ----------------------------------------------
-
-function resetElements() {
-    cofreTesoro.src = "/media/img/cofre.webp";
-    cofreTesoro.classList.remove("cambio-imagen");
-    cofreTesoro.classList.remove("abriendo");
-    cofreTesoro.classList.remove("rebotando");
-
-    llaveCofre.classList.remove("cayendo");
-    hideUp(btnAbrirCofre);
-
-    btnLetter.classList.remove("add-margin");
-}
 
 function resetMenuPrincipal() {
     
@@ -10003,7 +9751,6 @@ function resetGameAfterLevel() {
 
     // Reiniciar variables
     openedAjustes = false;
-    openedLetter = false;
     openedNiveles = false;
     openedLevelInstructions = false;
     openedHeleaState = false;
