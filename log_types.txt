@@ -1,0 +1,7 @@
+Tipos de logs de versiones
+-------------------------------------
+
+gameplay --> Para logs del propio juego.
+ui --> Para logs referentes al apartado visual.
+fix --> Para solución de problemas o arreglos de bugs.
+system --> Para mejoras en rendimiento o cambios internos no visibles para el jugador.

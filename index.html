@@ -1,0 +1,1750 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Título y tamaño del juego -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ffffff">
+    <title>Welcome to Helea</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Welcome to Helea" />
+    <link rel="manifest" href="/favicon/site.webmanifest" />
+
+    <!-- Fuentes utilizadas -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Hojas de estilos CSS -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Precarga de la imagen de la pantalla de carga -->
+     <link rel="preload" as="image" href="media/backgrounds/loading-screen.png">
+
+    <!-- Scripts JS -->
+    <script src="scripts/flyingAssets.js" type="module"></script>
+    <script src="scripts/main.js" type="module"></script>
+</head>
+<body>
+    <main>
+        <!-- Pantalla de carga inicial -->
+        <section id="loading-screen" class="invisible">
+            <div id="ui-loading">
+                <p id="assets-loaded-msg" class="loading-message">1 de 300</p>
+                <p id="loading-msg" class="loading-message">Cargando elementos...</p>
+                <div id="loading-bars">
+                    <div id="loading-bar"></div>
+                </div>
+            </div>
+            <p id="game-version">Welcome to Helea (versión actual)</p>
+        </section>
+
+        <div id="loading-decision" class="out-up hidden">
+            <h3>Ha habido un problema</h3>
+            <p>No se han podido cargar todos los elementos del juego.</p>
+            <p id="txt-assets-corrupted">5 assets no se han cargado correctamente.</p>
+            <div>
+                <button id="retry-button">REINTENTAR</button>
+                <button id="continue-button">JUGAR YA</button>
+            </div>
+            <p>* Recomendamos REINTENTAR para asegurar la mejor experiencia de juego.</p>
+        </div>
+
+        <!-- Página de Game Over -->
+        <section id="game-over-screen" class="out-up hidden">
+            <img id="icon-over" src="" alt="Imagen icono de Game Over">
+            <div id="end-game-texts">
+                <h2 id="end-game-txt">Fin del juego</h2>
+                <p id="mensaje-feedback-over"></p>    
+            </div>
+
+            <div id="end-game-buttons">
+                <button id="watch-intro">Introducción</button>
+                <button id="go-to-main">Menú principal</button>
+            </div>
+        </section>
+
+        <!-- Introducción -->
+        <section id="starting-page" class="out-up hidden">
+            <header id="instrucciones-header">
+                <h3 id="instrucciones-header-txt"></h3>
+            </header>
+
+            <video autoplay muted loop class="main-background-video">
+                <source src="media/videos/fondo_estrellas.mp4" type="video/mp4">
+                Tu navegador no soporta la extensión de vídeo.
+            </video>
+
+            <div id="start-banner1" class="start-banner">
+                <img class="headphones-icon" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Icono de cascos" data-src="/media/icons/icon-headphones.png">
+                <p>Usa <span class="purple">auriculares</span> para una mejor experiencia de juego</p>
+            </div>
+
+            <div id="start-banner2" class="start-banner hidden">
+                <div class="dialogue-indicator show big"></div>
+                <p>En los diálogos, siempre que veas este indicador parpadear, <span class="purple">toca la pantalla</span> para continuar</p>
+            </div>
+
+            <div id="select-character" class="start-banner hidden">
+                <div class="header-selector">
+                    <h3>¿Quién eres?</h3>
+                    <p>Elige un personaje</p>
+                </div>
+                
+                <div id="character-set-display">
+                    <div class="flex-row">
+                        <div class="select-character-option selected" data-selected-character="male">
+                            <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Personaje masculino" data-src="/media/img/male-character/male_normal.png">
+                        </div>
+                        <h3 class="name-detail">ÉL</h3>
+                    </div>
+
+                    <div class="flex-row">
+                        <div class="select-character-option" data-selected-character="female">
+                            <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Personaje femenino" data-src="/media/img/female-character/female_normal.png">
+                        </div>
+                        <h3 class="name-detail">ELLA</h3>
+                    </div>
+
+                    <div class="flex-row">
+                        <div class="select-character-option" data-selected-character="nobinary">
+                            <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Personaje sin género" data-src="/media/img/non-binary-character/nobinary_normal.png">
+                        </div>
+                        <h3 class="name-detail">ELLE</h3>
+                    </div>
+                </div>
+
+                <button id="select-character-btn">CONTINUAR</button>
+            </div>
+
+            <div id="set-your-name" class="start-banner hidden">
+                <img id="selected-character-decoration" src="" alt="Personaje seleccionado">
+
+                <div class="header-selector">
+                    <h3>¿Cómo te llamas?</h3>
+                    <p>Escribe tu nombre</p>
+                </div>
+                <input id="player-name" name="player-name" type="text" placeholder="Escribe aquí">
+                
+                <button id="set-your-name-btn">ACEPTAR</button>
+            </div>
+
+            <!-- Diálogos de la introducción -->
+            <div id="header-dialogues" class="out-up hidden">
+                <button id="prev-dialogue">< Anterior</button>
+                <img id="btn-ocultar-dg" src="media/icons/icon-eye.png" alt="Icono de ojo">
+                <button id="skip-dialogues">Saltar >></button>
+            </div>
+
+            <img id="helea-planet" class="element-dialogue invisible" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Planeta de Helea" data-src="/media/img/helea-planet.png">
+            <img id="nave-espacial" class="element-dialogue invisible" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Nave espacial" data-src="/media/img/nave-espacial.webp">
+
+            <div id="dialogues" class="out-up hidden">
+                <img id="character-male-ui" class="character-ui" src="" alt="Personaje masculino en los diálogos">
+                <img id="character-female-ui" class="character-ui" src="" alt="Personaje femenino en los diálogos">
+                <img id="character-nobinary-ui" class="character-ui" src="" alt="Personaje no binario en los diálogos">
+                <img id="character-airaak-ui" class="character-ui" src="" alt="Personaje Airaak en los diálogos">
+                <img id="character-madre-ui" class="character-ui" src="" alt="Personaje Mamá en los diálogos">
+                <div id="dialogues-container">
+                    <div id="name-speaker-container">
+                        <span id="name-speaker"></span>
+                    </div>
+                    <p id="dialogue-txt"></p>
+                    <div id="dialogue-indicator" class="dialogue-indicator"></div>
+                </div>
+            </div>
+
+            <!-- Tomar la decisión de CONTINUAR o ABORTAR la misión -->
+            <div id="banner-intro-choice" class="banner-choice hidden out-up">
+                <img id="personaje-asomado" src="" alt="Personaje asomado en el choice pannel">
+                <div style="z-index: 100;">
+                    <p class="choice-question">¿Aceptas el reto?</p>
+                    <div>
+                        <button id="choice-go" class="choice-option">¡Vamos allá!</button>
+                        <button id="choice-wakeup" class="choice-option">No estoy segura...</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Menú principal -->
+        <section id="main-page" class="out-up hidden">
+
+            <div id="overlay-guide" class="hidden invisible">
+                <h3>¡BIENVENIDA A HELEA!</h3>
+                <img id="character-airaak-welcome" class="invisible" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Airaak welcome" data-src="/media/img/airaak.png">
+                <div id="instructions-guide-container">
+                    <p id="instructions-guide" class="invisible"></p>
+                    <div id="dialogue-indicator-guide" class="dialogue-indicator"></div>
+                </div>
+            </div>
+
+            <header id="main-header" class="inout">
+                <h3>Hola, humana</h3>
+                <h1>Welcome to Helea</h1>
+            </header>
+
+            <video id="stars-background-main" autoplay muted loop class="main-background-video">
+                <source src="media/videos/fondo_estrellas.mp4" type="video/mp4">
+                Tu navegador no soporta la extensión de vídeo.
+            </video>
+
+            <!-- Burbujas flotantes -->
+            <div id="contenedor-burbujas" class="inout">
+                <div id="flying-asset1" class="flying-asset"></div>
+                <div id="flying-asset2" class="flying-asset"></div>
+                <div id="flying-asset3" class="flying-asset"></div>
+                <div id="flying-asset4" class="flying-asset"></div>
+                <div id="flying-asset5" class="flying-asset"></div>
+                <div id="flying-asset6" class="flying-asset"></div>
+                <div id="flying-asset7" class="flying-asset"></div>
+                <div id="flying-asset8" class="flying-asset"></div>
+                <div id="flying-asset9" class="flying-asset"></div>
+                <div id="flying-asset10" class="flying-asset"></div>
+            </div>
+        
+            <!-- Botón de JUGAR -->
+            <img id="play-button" class="guide-element main-menu-block inout" src="media/icons/play-button.png" alt="Botón de play">
+
+            <!-- Mapa de niveles -->
+            <div id="niveles-menu" class="hidden">
+                <div id="planets-container">
+                    <div class="planet-level-container planet-level-container8 building-level" data-level="8">
+                        <div class="planet-level-info">
+                            <span>Nivel 8</span>
+                            <h3 data-original="Mar de huesos">Mar de huesos</h3>
+                            <p class="record-level-txt">Récord actual</p>
+                        </div>
+                        <div class="planet-level-selector planet-level8"></div>
+                    </div>
+                    
+                    <div class="planet-level-container planet-level-container7 building-level" data-level="7">
+                        <div class="planet-level-info">
+                            <span>Nivel 7</span>
+                            <h3 data-original="Golpe de vacío">Golpe de vacío</h3>
+                            <p class="record-level-txt">Récord actual</p>
+                        </div>
+                        <div class="planet-level-selector planet-level7"></div>
+                    </div>
+
+                    <div class="planet-level-container planet-level-container6 building-level" data-level="6">
+                        <div class="planet-level-info">
+                            <span>Nivel 6</span>
+                            <h3 data-original="Golpe de vacío">Golpe de vacío</h3>
+                            <p class="record-level-txt">Récord actual</p>
+                        </div>
+                        <div class="planet-level-selector planet-level6"></div>
+                    </div>
+
+                    <div class="planet-level-container planet-level-container5 building-level" data-level="5">
+                        <div class="planet-level-info">
+                            <span>Nivel 5</span>
+                            <h3 data-original="Golpe de vacío">Golpe de vacío</h3>
+                            <p class="record-level-txt">Récord actual</p>
+                        </div>
+                        <div class="planet-level-selector planet-level5"></div>
+                    </div>
+
+                    <div class="planet-level-container planet-level-container4" data-level="4">
+                        <div class="planet-level-info">
+                            <span>Nivel 4</span>
+                            <h3 data-original="Underworld">Underworld</h3>
+                            <p class="record-level-txt">Récord actual</p>
+                        </div>
+                        <div class="planet-level-selector planet-level4"></div>
+                    </div>
+
+                    <div class="planet-level-container planet-level-container3" data-level="3">
+                        <div class="planet-level-info">
+                            <span>Nivel 3</span>
+                            <h3 data-original="Sunder">Sunder</h3>
+                            <p class="record-level-txt">Récord actual</p>
+                        </div>
+                        <div class="planet-level-selector planet-level3"></div>
+                    </div>
+
+                    <div class="planet-level-container planet-level-container2" data-level="2">
+                        <div class="planet-level-info">
+                            <span>Nivel 2</span>
+                            <h3 data-original="Meow">Meow</h3>
+                            <p class="record-level-txt">Récord actual</p>
+                        </div>
+                        <div class="planet-level-selector planet-level2"></div>
+                    </div>
+
+                    <div class="planet-level-container planet-level-container1" data-level="1">
+                        <div class="planet-level-info">
+                            <span>Nivel 1</span>
+                            <h3 data-original="Musis">Musis</h3>
+                            <p class="record-level-txt">Récord actual</p>
+                        </div>
+                        <div class="planet-level-selector planet-level1"></div>
+                    </div>
+                </div>
+
+                <!-- Página de nivel seleccionado -->
+                <div id="level-selected-submenu" class="out-up hidden">
+                    <div id="level-selected-details">
+                        <div id="planet-selected-info">
+                            <span>Nivel X</span>
+                            <h3>Nombre del nivel seleccionado</h3>
+                            <p>Récord actual</p>
+                        </div>
+                        <div id="planet-selected"></div>
+                    </div>
+
+                    <!-- Jugar nivel o abrir las instrucciones -->
+                    <div id="level-selected-buttons">
+                        <button id="play-level-btn">JUGAR NIVEL</button>
+                        <button id="learn-how-btn">INSTRUCCIONES</button>
+                    </div>
+                    <div id="level-select-difficult" class="hidden">
+                        <div id="difficult-selector">
+                            <button class="difficult-button easy" data-difficult="fácil">FÁCIL</button>
+                            <button class="difficult-button normal" data-difficult="normal">NORMAL</button>
+                            <button class="difficult-button hard" data-difficult="difícil">DIFÍCIL</button>
+                        </div>
+                        <button id="play-level-btn-ready" class="out-screen">JUGAR NIVEL</button>
+                    </div>
+                </div>
+
+                <!-- Página de instrucciones de nivel -->
+                <section id="instructions-page" class="out-up hidden">
+                    <img class="instruction-step active" src="" alt="Instrucciones 1">
+                    <img class="instruction-step" src="" alt="Instrucciones 2">
+                    <img class="instruction-step" src="" alt="Instrucciones 3">
+                    <img class="instruction-step" src="" alt="Instrucciones 4">
+                    <img class="instruction-step" src="" alt="Instrucciones 5">
+                    <img class="instruction-step" src="" alt="Instrucciones 6">
+
+                    <div id="change-instructions">
+                        <button id="prev-inst" class="btn-instructions">◀</button>
+                        <button id="next-inst" class="btn-instructions">▶</button>
+                    </div>
+                </section>
+
+                <div id="moon-levels-ui" class="hidden">
+                    <img id="character-img-levels" src="" alt="Imagen del personaje en los niveles">
+                    <img id="moon-img-levels" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Imagen de la luna" data-src="/media/img/moon.png">
+                </div>
+            </div>
+
+            <div id="btn-logs" class="inout">
+                <span id="game-version-logs"></span>
+                <span id="logs-notif-dot"></span>
+            </div>
+
+            <div id="main-menu-left" class="main-menu-block">
+                <div id="btn-story" class="main-menu-option guide-element inout">
+                    <img id="icon-book" src="media/icons/icon-book.png" alt="Icono de libro">
+                </div>
+
+                <div id="btn-helex" class="main-menu-option guide-element inout">
+                    <img id="icon-helex" src="media/img/energia.png" alt="Icono de energía">
+                </div>
+            </div>
+
+            <div id="main-menu-right" class="main-menu-block">
+                <div id="btn-carta" class="main-menu-option guide-element inout">
+                    <img id="icon-llave" src="media/icons/icono-llave.png" alt="Icono de llave">
+                </div>
+                <div id="btn-all-records" class="main-menu-option out-up hidden">
+                    <img id="icon-trophy" src="media/icons/icon-trophy.png" alt="Icono de trofeo">
+                </div>
+                <div id="btn-ajustes" class="main-menu-option guide-element inout">
+                    <img id="icon-ajustes" src="media/icons/icono-config.png" alt="Icono de configuración">
+                </div>
+            </div>
+
+            <div id="main-character" class="main-index-container">
+                <img id="character-img" src="" alt="Imagen del personaje">
+                <img id="moon-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Imagen de la luna" data-src="/media/img/moon.png">
+            </div>
+
+            <!-- Página de tesoro -->
+            <button id="abrir-cofre" class="hidden out-up">
+                <img id="llave-cofre" class="out-up" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Imagen de llave" data-src="/media/img/llave.png">
+                <p id="instrucciones-cofre">Toca para abrir</p>
+            </button>
+
+            <img id="cofre-tesoro" class="hidden" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Cofre del tesoro" data-src="/media/img/cofre.webp">
+            <div id="sombra-cofre"></div>
+            <div id="luz-cofre" class="hidden"></div>
+
+            <!-- Página de todos los récords -->
+            <section id="all-records-page" class="out-up hidden">
+                <div class="records-header">
+                    <span class="all-records-subtitle">¿Podrás superarte?</span>
+                    <h2>TUS RÉCORDS</h2>
+                </div>
+
+                <div class="records-main">
+                    <div class="record-box">
+                        <div class="planet-level-container1">
+                            <h3>Nivel 1: Planeta Musis</h3>
+                        </div>
+                        <div class="structure-records">
+                            <img class="record-planet-img" src="/media/img/planets/planet8.png" alt="Imagen planeta Musis">
+                            <div class="record-planet-info">
+                                <ul>
+                                    <li>
+                                        <span class="dif-txt dif-green">Fácil:</span>
+                                        <span class="record-set">30 hx.</span>
+                                    </li>
+                                    <li>
+                                        <span class="dif-txt dif-orange">Normal:</span>
+                                        <span class="record-set">30 hx.</span>
+                                    </li>
+                                    <li>
+                                        <span class="dif-txt dif-red">Difícil:</span>
+                                        <span class="record-set">30 hx.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="record-box">
+                        <div class="planet-level-container2">
+                            <h3>Nivel 2: Planeta Meow</h3>
+                        </div>
+                        <div class="structure-records">
+                            <img class="record-planet-img" src="/media/img/planets/planet7.png" alt="Imagen planeta Meow">
+                            <div class="record-planet-info">
+                                <ul>
+                                    <li>
+                                        <span class="dif-txt dif-green">Fácil:</span>
+                                        <span class="record-set">30 hx.</span>
+                                    </li>
+                                    <li>
+                                        <span class="dif-txt dif-orange">Normal:</span>
+                                        <span class="record-set">30 hx.</span>
+                                    </li>
+                                    <li>
+                                        <span class="dif-txt dif-red">Difícil:</span>
+                                        <span class="record-set">30 hx.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="record-box">
+                        <div class="planet-level-container3">
+                            <h3>Nivel 3: Planeta Sunder</h3>
+                        </div>
+                        <div class="structure-records">
+                            <img class="record-planet-img" src="/media/img/planets/planet6.png" alt="Imagen planeta Sunder">
+                            <div class="record-planet-info">
+                                <ul>
+                                    <li>
+                                        <span class="dif-txt dif-green">Fácil:</span>
+                                        <span class="record-set">30 hx.</span>
+                                    </li>
+                                    <li>
+                                        <span class="dif-txt dif-orange">Normal:</span>
+                                        <span class="record-set">30 hx.</span>
+                                    </li>
+                                    <li>
+                                        <span class="dif-txt dif-red">Difícil:</span>
+                                        <span class="record-set">30 hx.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="record-box">
+                        <div class="planet-level-container4">
+                            <h3>Nivel 4: Planeta Underworld</h3>
+                        </div>
+                        <div class="structure-records">
+                            <img class="record-planet-img" src="/media/img/planets/planet5.png" alt="Imagen planeta Underworld">
+                            <div class="record-planet-info">
+                                <ul>
+                                    <li>
+                                        <span class="dif-txt dif-green">Fácil:</span>
+                                        <span class="record-set">30 hx.</span>
+                                    </li>
+                                    <li>
+                                        <span class="dif-txt dif-orange">Normal:</span>
+                                        <span class="record-set">30 hx.</span>
+                                    </li>
+                                    <li>
+                                        <span class="dif-txt dif-red">Difícil:</span>
+                                        <span class="record-set">30 hx.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="record-box">
+                        <div class="planet-level-container5">
+                            <h3>Nivel 5 (en construcción)</h3>
+                        </div>
+                        <div class="structure-records">
+                            <div class="record-planet locked">
+                                <img class="record-planet-img" src="/media/img/planets/planet4.png" alt="Imagen planeta">
+                            </div>
+
+                            <div class="record-planet-info">
+                                <ul>
+                                    <li>
+                                        <span class="dif-txt dif-green">Fácil:</span>
+                                        <span class="record-set">30 hx.</span>
+                                    </li>
+                                    <li>
+                                        <span class="dif-txt dif-orange">Normal:</span>
+                                        <span class="record-set">30 hx.</span>
+                                    </li>
+                                    <li>
+                                        <span class="dif-txt dif-red">Difícil:</span>
+                                        <span class="record-set">30 hx.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="record-box">
+                        <div class="planet-level-container6">
+                            <h3>Nivel 6 (en construcción)</h3>
+                        </div>
+                        <div class="structure-records">
+                            <div class="record-planet locked">
+                                <img class="record-planet-img" src="/media/img/planets/planet3.png" alt="Imagen planeta">
+                            </div>
+
+                            <div class="record-planet-info">
+                                <ul>
+                                    <li>
+                                        <span class="dif-txt dif-green">Fácil:</span>
+                                        <span class="record-set">30 hx.</span>
+                                    </li>
+                                    <li>
+                                        <span class="dif-txt dif-orange">Normal:</span>
+                                        <span class="record-set">30 hx.</span>
+                                    </li>
+                                    <li>
+                                        <span class="dif-txt dif-red">Difícil:</span>
+                                        <span class="record-set">30 hx.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="record-box">
+                        <div class="planet-level-container7">
+                            <h3>Nivel 7 (en construcción)</h3>
+                        </div>
+                        <div class="structure-records">
+                            <div class="record-planet locked">
+                                <img class="record-planet-img" src="/media/img/planets/planet2.png" alt="Imagen planeta">
+                            </div>
+                            
+                            <div class="record-planet-info">
+                                <ul>
+                                    <li>
+                                        <span class="dif-txt dif-green">Fácil:</span>
+                                        <span class="record-set">30 hx.</span>
+                                    </li>
+                                    <li>
+                                        <span class="dif-txt dif-orange">Normal:</span>
+                                        <span class="record-set">30 hx.</span>
+                                    </li>
+                                    <li>
+                                        <span class="dif-txt dif-red">Difícil:</span>
+                                        <span class="record-set">30 hx.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="record-box">
+                        <div class="planet-level-container8">
+                            <h3>Nivel 8 (en construcción)</h3>
+                        </div>
+                        <div class="structure-records">
+                            <div class="record-planet locked">
+                                <img class="record-planet-img" src="/media/img/planets/planet1.png" alt="Imagen planeta">
+                            </div>
+
+                            <div class="record-planet-info">
+                                <ul>
+                                    <li>
+                                        <span class="dif-txt dif-green">Fácil:</span>
+                                        <span class="record-set">30 hx.</span>
+                                    </li>
+                                    <li>
+                                        <span class="dif-txt dif-orange">Normal:</span>
+                                        <span class="record-set">30 hx.</span>
+                                    </li>
+                                    <li>
+                                        <span class="dif-txt dif-red">Difícil:</span>
+                                        <span class="record-set">30 hx.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <footer class="inout">
+                <p id="txt-footer">Una producción de MGR</p>
+            </footer>
+        </section>
+
+        <!-- Niveles del juego -->
+        <section id="level-page" class="out-up hidden">
+            <header id="header-level" class="out-up hidden">
+                <div id="header-level-top">
+                    <h4 id="level-current-header">Título del nivel</h4>
+                    <div class="puntuacion-actual">
+                        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Icono de helex" data-src="/media/img/heleax.png">
+                        <span id="puntuacion-actual-numberid" class="puntuacion-actual-number">0</span>
+                        <span id="puntos-ganados" class="invisible">+ 000</span>
+                    </div>
+                </div>
+
+                <div id="header-level-bottom">
+                    <div id="lives-container">
+                        <img src="media/img/life.png" alt="Icono de vida" class="life">
+                        <img src="media/img/life.png" alt="Icono de vida" class="life">
+                        <img src="media/img/life.png" alt="Icono de vida" class="life">
+                    </div>
+                    <span id="countdown-counter-level3" class="hidden">10</span>
+                    <img id="icon-ajustes-level" src="media/icons/icono-config-white.png" alt="Icono de ajustes">
+                </div>
+                
+            </header>
+
+            <main>
+
+                <!-- Pantalla de carga del nivel -->
+                <section id="loading-level">
+                    <div class="loading-level-titles">
+                        <h4 id="loading-txt-levelnum">Nivel 1</h4>
+                        <div>
+                            <h2 class="loading-txt-planeta">Planeta</h2>
+                            <h2 id="loading-txt-planetaname">Musis</h2>
+                        </div>
+                        <p id="loading-txt-cargando">Cargando...</p>
+                    </div>
+                    <img class="nave-espacial-leveloading" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Nave espacial" data-src="/media/img/nave-espacial.webp">
+                </section>
+
+                <!-- Introducción del nivel (diálogos) -->
+                <div id="header-dialogues-levels" class="out-up hidden">
+                    <button id="prev-dialogue-levels">< Anterior</button>
+                    <img id="btn-ocultar-dg-levels" src="media/icons/icon-eye.png" alt="Icono de ojo">
+                    <button id="skip-dialogues-levels">Saltar >></button>
+                </div>
+
+                <div id="dialogues-levels" class="out-up hidden">
+                    <img id="character-male-ui-levels" class="character-ui" src="" alt="Personaje masculino en los diálogos">
+                    <img id="character-female-ui-levels" class="character-ui" src="" alt="Personaje femenino en los diálogos">
+                    <img id="character-nobinary-ui-levels" class="character-ui" src="" alt="Personaje no binario en los diálogos">
+                    <img id="character-airaak-ui-levels" class="character-ui" src="" alt="Personaje Airaak en los diálogos">
+                    <img id="character-gorko-ui-levels" class="character-ui" src="" alt="Personaje Gorko en los diálogos">
+                    <img id="character-baoo-ui-levels" class="character-ui" src="" alt="Personaje Baoo en los diálogos">
+                    <img id="character-oktopo-ui-levels" class="character-ui" src="" alt="Personaje Oktopo en los diálogos">
+                    <div id="dialogues-container-levels">
+                        <div id="name-speaker-container-levels">
+                            <span id="name-speaker-levels"></span>
+                        </div>
+                        <p id="dialogue-txt-levels"></p>
+                        <div id="dialogue-indicator-levels" class="dialogue-indicator"></div>
+                    </div>
+                </div>
+
+                <!-- Nivel 1 -->
+                <section id="level1-game" class="level-game hidden invisible">
+                    <div id="monsters-container" class="level-element">
+                        <div class="monsters-grid">
+                            <img id="monster-yellow" class="monster" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Monster 1" data-color="yellow" data-src="/media/img/level1/monster1.png">
+                            <img id="monster-purple" class="monster" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Monster 4" data-color="purple" data-src="/media/img/level1/monster4.png">
+                        </div>
+                        <div class="monsters-grid">
+                            <img id="monster-blue" class="monster" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Monster 3" data-color="blue" data-src="/media/img/level1/monster3.png">
+                            <img id="monster-orange" class="monster" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Monster 2" data-color="orange" data-src="/media/img/level1/monster2.png">
+                        </div>
+                    </div>
+
+                    <h3 class="round-txt out-up hidden">RONDA 1</h3>
+                    <h3 class="feedback-txt-level now-you-txt out-up hidden">¡AHORA TÚ!</h3>
+                    <h3 class="feedback-txt-level fail-txt hidden">¡FALLASTE!</h3>
+                    <h3 class="feedback-txt-level correct-txt hidden">¡BIEN HECHO!</h3>
+
+                    <img id="monster-music" class="level-element" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Radio music" data-src="/media/img/level1/monster-music.png">
+                </section>
+
+                <!-- Nivel 2 -->
+                <section id="level2-game" class="level-game hidden invisible">
+                    <div class="absolute-elements">
+                        <div id="info-song-container" class="level-element invisible">
+                            <div id="audio-wave-level2-container" class="hidden">
+                                <div class="audio-wave level2 small"></div>
+                                <div class="audio-wave level2 big"></div>
+                                <div class="audio-wave level2 medium"></div>
+                            </div>
+                            <h3 id="song-name"></h3>
+                            <h4 id="artist-name"></h4>
+                        </div>
+                        <div id="songs-option-container" class="level-element">
+                            <!-- Aquí se añadirán automáticamente los botones con las posibles opciones --> 
+                        </div>
+                        <div id="time-container" class="level-element hidden">
+                            <div id="main-time-bar">
+                                <div id="secondary-time-bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="characters-grid level-element">
+                        <img id="astronauta" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Lucía astronauta" data-src="/media/img/astronaut.png">
+                        <img id="baoo-level" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Baoo enemigo" data-src="/media/img/baoo.png">
+                    </div>
+                    <h3 class="round-txt out-up hidden">RONDA 1</h3>
+                    <h3 class="feedback-txt-level fail-txt hidden">¡FALLASTE!</h3>
+                    <h3 class="feedback-txt-level correct-txt hidden">¡BIEN HECHO!</h3>
+                </section>
+
+                <!-- Nivel 3 -->
+                <section id="level3-game" class="level-game hidden invisible">
+                    <h3 class="round-txt out-up hidden">RONDA 1</h3>
+                    <h3 id="what-to-do-txt" class="feedback-txt-level hidden">¡MANTÉN LA VELOCIDAD!</h3>
+                    <h3 class="feedback-txt-level fail-txt hidden">¡TIEMPO!</h3>
+                    <h3 class="feedback-txt-level correct-txt hidden">¡BIEN HECHO!</h3>
+
+                    <div id="minigames-container" class="level-element">
+                        
+                        <!-- Minijuego de aumentar la velocidad -->
+                        <div id="minigame-speed" class="minigame invisible" data-minigame="speed">
+                            <div id="progress-bar-level3">
+                                <div id="main-progressbar-lv3">
+                                    <div id="secondary-progressbar-lv3"></div>
+                                </div>
+                            </div>
+                            <div id="speed-terminal">
+                                <div>
+                                    <span id="speed-counter"></span>
+                                </div>
+                            </div>
+                            <div id="speed-controller">
+                                <img class="speed-controller-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Palanca de velocidad" data-src="/media/img/level3/speed-controller1.png">
+                                <img class="speed-controller-img hidden" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Palanca de velocidad" data-src="/media/img/level3/speed-controller2.png">
+                            </div>
+                        </div>
+
+                        <!-- Minijuego de enfriar las barras de combustible -->
+                        <div id="minigame-freeze" class="minigame invisible" data-minigame="freeze">
+                            <div id="fuel-grid-container">
+                                <div class="fuel-module" data-id="1"></div>
+                                <div class="fuel-module" data-id="2"></div>
+                                <div class="fuel-module" data-id="3"></div>
+                                <div class="fuel-module" data-id="4"></div>
+                                <div class="fuel-module" data-id="5"></div>
+                                <div class="fuel-module" data-id="6"></div>
+                                <div class="fuel-module" data-id="7"></div>
+                                <div class="fuel-module" data-id="8"></div>
+                                <div class="fuel-module" data-id="9"></div>
+                                <div class="fuel-module" data-id="10"></div>
+                                <div class="fuel-module" data-id="11"></div>
+                                <div class="fuel-module" data-id="12"></div>
+                                <div class="fuel-module" data-id="13"></div>
+                                <div class="fuel-module" data-id="14"></div>
+                                <div class="fuel-module" data-id="15"></div>
+                                <div class="fuel-module" data-id="16"></div>
+                            </div>
+                        </div>
+
+                        <!-- Minijuego de combinación de símbolos -->
+                        <div id="minigame-order" class="minigame invisible" data-minigame="order">
+                            <div class="target-section">
+                                <p class="instruction-subtitle">SECUENCIA OBJETIVO</p>
+                                <div id="target-icons-container"></div>
+                            </div>
+
+                            <div class="dials-section">
+                                <div id="dials-container"></div>
+                            </div>
+                        </div>
+
+                        <!-- Minijuego de equilibrar la nave y aterrizar -->
+                        <div id="minigame-land" class="minigame invisible" data-minigame="land">
+                            <div id="objective-stable-container">
+                                <p>Objetivo:</p>
+                                <div>
+                                    <span id="objective-stable-txt">75</span>
+                                </div>
+                                <p>grados</p>
+                            </div>
+                            <div id="main-screen-land">
+                                <img id="spaceship-front" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Nave aterrizando" data-src="/media/img/spaceship-front.png">
+                            </div>
+                            <div id="actual-stable-container">
+                                <button id="left-stabilizer" class="stabilizer">
+                                    <img src="media/icons/icon-back.png" alt="Flecha rotar izquierda">
+                                </button>
+                                <div id="actual-ship-angle-container">
+                                    <span id="actual-stable-txt">30°</span>
+                                </div>
+                                <button id="right-stabilizer" class="stabilizer">
+                                    <img id="arrow-rotate-right" src="media/icons/icon-back.png" alt="Flecha rotar derecha">
+                                </button>
+                            </div>
+                            <button id="land-ship">
+                                Aterrizar 🚀
+                            </button>
+                        </div>
+
+                        <!-- Minijuego de limpiar residuos espaciales -->
+                         <div id="minigame-clean" class="minigame invisible" data-minigame="clean">
+                            <div id="area-to-clean">
+
+                            </div>
+                         </div>
+                    </div>
+
+                </section>
+
+                <!-- Nivel 4 -->
+                <section id="level4-game" class="level-game hidden invisible">
+                    <h3 class="round-txt out-up hidden">RONDA 1</h3>
+                    <h3 id="what-to-do-txt" class="feedback-txt-level hidden">¡MANTÉN LA VELOCIDAD!</h3>
+                    <h3 class="feedback-txt-level fail-txt hidden">¡FALLASTE!</h3>
+                    <h3 class="feedback-txt-level correct-txt hidden">¡BIEN HECHO!</h3>
+
+                    <div id="structure-level4">
+                        <div id="hints-box" class="level-element">
+                            <h4 id="hints-title" class="title-level4">Pistas 💡</h4>
+    
+                            <div id="scroll-hints">
+                                <div id="hint1" class="hint hidden">
+                                    <div class="hint-content">
+                                        <p id="hint-txt1" class="hint-txt"></p>
+                                    </div>
+                                    <div class="helex-almacenado-box">
+                                        <span id="helex-almacenado1" class="helex-almacenado"></span>
+                                        <img class="helex-icon" src="media/img/heleax.png" alt="Icono de Helex">
+                                    </div>
+                                </div>
+                                
+                                <div id="hint2" class="hint hidden">
+                                    <div class="hint-content">
+                                        <p id="hint-txt2" class="hint-txt"></p>
+                                    </div>
+                                    <div class="helex-almacenado-box">
+                                        <span id="helex-almacenado2" class="helex-almacenado"></span>
+                                        <img class="helex-icon" src="media/img/heleax.png" alt="Icono de Helex">
+                                    </div>
+                                </div>
+    
+                                <div id="hint3" class="hint hidden">
+                                    <div class="hint-content">
+                                        <p id="hint-txt3" class="hint-txt"></p>
+                                    </div>
+                                    <div class="helex-almacenado-box">
+                                        <span id="helex-almacenado3" class="helex-almacenado"></span>
+                                        <img class="helex-icon" src="media/img/heleax.png" alt="Icono de Helex">
+                                    </div>
+                                </div>
+    
+                                <div id="hint4" class="hint hidden">
+                                    <div class="hint-content">
+                                        <p id="hint-txt4" class="hint-txt"></p>
+                                    </div>
+                                    <div class="helex-almacenado-box">
+                                        <span id="helex-almacenado4" class="helex-almacenado"></span>
+                                        <img class="helex-icon" src="media/img/heleax.png" alt="Icono de Helex">
+                                    </div>
+                                </div>
+
+                                <div id="hint5" class="hint hidden">
+                                    <div class="hint-content">
+                                        <p id="hint-txt5" class="hint-txt"></p>
+                                    </div>
+                                    <div class="helex-almacenado-box">
+                                        <span id="helex-almacenado5" class="helex-almacenado"></span>
+                                        <img class="helex-icon" src="media/img/heleax.png" alt="Icono de Helex">
+                                    </div>
+                                </div>
+
+                                <div id="hint6" class="hint hidden">
+                                    <div class="hint-content">
+                                        <p id="hint-txt6" class="hint-txt"></p>
+                                    </div>
+                                    <div class="helex-almacenado-box">
+                                        <span id="helex-almacenado6" class="helex-almacenado"></span>
+                                        <img class="helex-icon" src="media/img/heleax.png" alt="Icono de Helex">
+                                    </div>
+                                </div>
+
+                                <div id="hint7" class="hint hidden">
+                                    <div class="hint-content">
+                                        <p id="hint-txt7" class="hint-txt"></p>
+                                    </div>
+                                    <div class="helex-almacenado-box">
+                                        <span id="helex-almacenado7" class="helex-almacenado"></span>
+                                        <img class="helex-icon" src="media/img/heleax.png" alt="Icono de Helex">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="answer-box" class="level-element">
+                            <h4 id="your-answer-title" class="title-level4">Tu respuesta 🧠</h4>
+    
+                            <textarea 
+                                id="your-answer"
+                                maxlength="200"
+                                autocomplete="off"
+                                autocorrect="off"
+                                spellcheck="false"
+                                placeholder="Escribe aquí..."
+                            ></textarea>
+    
+                            <div id="buttons-level4-box">
+                                <button id="new-hint-btn">Pista</button>
+                                <button id="try-btn">Comprobar</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+            </main>
+        </section>
+
+        <!-- Página de final de nivel (resumen) -->
+        <section id="level-resume-page" class="out-up hidden">
+
+            <video id="level-completed-video" class="hidden"></video>
+
+            <h3 id="level-completed-txt" class="out-up hidden">Nivel completado</h3>
+
+            <video muted loop id="level-resume-video" class="hidden"></video>
+            
+            <div id="level-completed-details" class="hidden">
+                <h3 id="level-completed-txt-resume">Nivel completado</h3>
+
+                <div class="box-sup-info">
+
+                    <div class="box-data-and-score">
+
+                        <div class="box-data-level">
+                            <div class="box-level-events">
+                                <p id="level-difficult-resume" class="level-type-completed txt-appear">Nivel fácil</p>
+                                <div>
+                                    <p id="info-data-stats1" class="txt-appear">Aciertos: </p>
+                                    <span id="info-data1">4</span>
+                                </div>
+                                <div>
+                                    <p id="info-data-stats2" class="txt-appear">Errores: </p>
+                                    <span id="info-data2">6</span>
+                                </div>
+                            </div>
+                            <div class="box-planet-level-img">
+                                <img id="planet-level-ended" src="" alt="Planeta del nivel actual">
+                            </div>
+                        </div>
+
+                        <div class="box-score">
+                            <div>
+                                <p id="score-or-record" class="txt-appear">Puntuación:</p>
+                                <span id="final-score">156</span>
+                            </div>
+                            <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Imagen montón de Helex" data-src="/media/img/monton-helex.png">
+                        </div>
+                    </div>
+
+                    <div class="box-helex-total">
+                        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Icono de Helex" data-src="/media/img/heleax.png">
+                        <div class="helex-main-bar">
+                            <div class="helex-actual-bar">
+                                <span id="percent-txt-final-level">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box-inf-info">
+                    <div class="box-record">
+                        <div class="box-record-level">
+                            <span class="txt-appear">Récord</span>
+                            <p id="record-dificultad-txt" class="txt-appear">Dificultad fácil</p>
+                        </div>
+                        <div class="box-record-score">
+                            <span id="record-dificultad-number">230</span>
+                        </div>
+                    </div>
+                    <button id="close-info-level">
+                        <img src="media/icons/icon-back.png" alt="Icono volver">
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Banner para borrar todos los datos -->
+        <div id="banner-alert-delete" class="hidden">
+            <img id="close-banner-alert" src="media/icons/icon-close-white.png" alt="Icono de aspa cerrar">
+            <h3>¡Atención!</h3>
+            <div>
+                <p>Esta acción eliminará todos los datos del usuario e iniciará una nueva partida de Welcome to Helea.</p>
+                <p>Confirma que realmente quieres hacer esto.</p>
+            </div>
+            <button id="btn-borrar-datos-total">Borrar datos</button>
+        </div>
+
+        <!-- Banner para volver al mapa de niveles -->
+        <div id="banner-go-levels" class="hidden">
+            <img id="close-banner-golevels" src="media/icons/icon-close-white.png" alt="Icono de aspa cerrar">
+            <h3>Volver al mapa de niveles</h3>
+            <div>
+                <p>¿Seguro que quieres volver al mapa de niveles?</p>
+                <p>Perderás todo tu progreso del minijuego actual.</p>
+            </div>
+            <button id="btn-golevels-confirm">Confirmar</button>
+        </div>
+
+        <!-- Header del menú de pausa (jugando nivel) -->
+        <div id="header-level-settings" class="out-up hidden">
+            <h3>Juego</h3>
+            <h2>Pausado</h2>
+        </div>
+
+        <!-- Banner de ajustes -->
+        <section id="settings-banner" class="out-up hidden">
+            <div class="setting-item">
+                <button id="btn-borrar-datos">Borrar datos</button>
+            </div>
+
+            <div class="setting-item">
+                <span class="setting-name">Música</span>
+
+                <label class="switch">
+                    <input type="checkbox" id="toggle-music" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-item">
+                <span class="setting-name">Sonido</span>
+
+                <label class="switch">
+                    <input type="checkbox" id="toggle-sound-effects" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div id="setting-item-golevels" class="setting-item hidden">
+                <button id="btn-go-levels">Volver a niveles</button>
+            </div>
+        </section>
+
+        <div id="close-level-settings" class="hidden">
+            <button id="btn-close-level-settings">Volver al juego</button>
+        </div>
+
+        <!-- Página de audios de cumpleaños (felicitaciones) -->
+        <section id="audios-birthday" class="out-up hidden">
+            <div class="audio-birthday">
+               <button class="btn-playpause miguel" data-person="miguel">
+                    <img src="media/icons/icon-play.png" alt="Play pause icon">
+               </button>
+               <h4>Miguel</h4>
+               <div class="audio-wave-container">
+                    <div class="audio-wave miguel small"></div>
+                    <div class="audio-wave miguel big"></div>
+                    <div class="audio-wave miguel medium"></div>
+               </div>
+            </div>
+
+            <div class="audio-birthday">
+               <button class="btn-playpause alba" data-person="alba">
+                    <img src="media/icons/icon-play.png" alt="Play pause icon">
+               </button>
+               <h4>Alba</h4>
+               <div class="audio-wave-container">
+                    <div class="audio-wave alba small"></div>
+                    <div class="audio-wave alba big"></div>
+                    <div class="audio-wave alba medium"></div>
+               </div>
+            </div>
+
+            <div class="audio-birthday">
+               <button class="btn-playpause carmina" data-person="carmina">
+                    <img src="media/icons/icon-play.png" alt="Play pause icon">
+               </button>
+               <h4>Carmina</h4>
+               <div class="audio-wave-container">
+                    <div class="audio-wave carmina small"></div>
+                    <div class="audio-wave carmina big"></div>
+                    <div class="audio-wave carmina medium"></div>
+               </div>
+            </div>
+
+            <div class="audio-birthday">
+               <button class="btn-playpause laura" data-person="laura">
+                    <img src="media/icons/icon-play.png" alt="Play pause icon">
+               </button>
+               <h4>Laurita</h4>
+               <div class="audio-wave-container">
+                    <div class="audio-wave laura small"></div>
+                    <div class="audio-wave laura big"></div>
+                    <div class="audio-wave laura medium"></div>
+               </div>
+            </div>
+        </section>
+
+        <!-- Página de Helea (progreso del jugador) -->
+        <section id="helea-planet-progress" class="out-up hidden">
+            <span id="porcentaje-completado" class="hide-when-news"></span>
+            <div id="porcentaje-bar-container" class="hide-when-news">
+                <div id="helex-main-bar2">
+                    <div id="helex-actual-bar2"></div>
+                </div>
+                <div class="flex-col">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Icono de Helex" data-src="/media/img/heleax.png">
+                    <span id="total-points-txt"></span>
+                </div>
+            </div>
+            
+            <p id="objective-points" class="hide-when-news">Objetivo</p>
+
+            <div id="planet-helea-container">
+                <img id="planet-helea-state" class="hide-when-news" src="" alt="Planeta de Helea">
+            </div>
+            
+            <div id="btn-volver-state" class="hide-when-news">
+                <img id="icon-volver" src="media/icons/icon-back.png" alt="Icono de volver atrás">
+            </div>
+
+            <div id="btn-ver-noticias" class="hide-when-news">
+                <img id="icon-news" src="media/icons/icon-live.png" alt="Icono de noticias">
+                <span>Últimas noticias</span>
+            </div>
+
+            <div id="dialogues-helea" class="out-up hidden">
+                    <img id="character-kevin" class="character-ui" src="" alt="Personaje Kevin en los diálogos">
+                    <img id="character-sora" class="character-ui" src="" alt="Personaje Sora en los diálogos">
+                    <div id="dialogues-container-helea">
+                        <div id="name-speaker-container-helea">
+                            <span id="name-speaker-helea"></span>
+                        </div>
+                        <p id="dialogue-txt-helea"></p>
+                        <div id="dialogue-indicator-helea" class="dialogue-indicator"></div>
+                    </div>
+                </div>
+        </section>
+
+        <!-- Página de Historia de Helea -->
+        <section id="story-menu" class="out-up hidden">
+            <div id="story-menu-container">
+                <button id="primer-contacto-btn" class="story-option">
+                    <h4>Primer Contacto</h4>
+                    <p>Revive tu llegada al planeta y acepta la llamada de los heleanos para evitar su extinción.</p>
+                </button>
+
+                <button id="archivos-helea-btn" class="story-option">
+                    <h4>Historia de Helea</h4>
+                    <p>Descubre el origen de la crisis y la evolución de un planeta que lucha por salir a flote.</p>
+                </button>
+
+                <button id="btn-close-story-menu" class="go-down invisible">VOLVER</button>
+            </div>
+
+            <div id="story-loading-page" class="out-up hidden">
+                <p id="loading-txt-story">Cargando...</p>
+            </div>
+
+            <div id="helea-story-page" class="hidden invisible">
+                <img class="story-step active" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Página de historia 1" data-src="/media/backgrounds/story-of-helea/story1.png">
+                <img class="story-step" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Página de historia 2" data-src="/media/backgrounds/story-of-helea/story2.png">
+                <img class="story-step" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Página de historia 3" data-src="/media/backgrounds/story-of-helea/story3.png">
+                <img class="story-step" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Página de historia 4" data-src="/media/backgrounds/story-of-helea/story4.png">
+                <img class="story-step" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Página de historia 5" data-src="/media/backgrounds/story-of-helea/story5.png">
+                <img class="story-step" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Página de historia 6" data-src="/media/backgrounds/story-of-helea/story6.png">
+                <img class="story-step" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Página de historia 7" data-src="/media/backgrounds/story-of-helea/story7.png">
+                <img class="story-step" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Página de historia 8" data-src="/media/backgrounds/story-of-helea/story8.png">
+                <img class="story-step" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Página de historia 9" data-src="/media/backgrounds/story-of-helea/story9.png">
+                <img class="story-step" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Página de historia 10" data-src="/media/backgrounds/story-of-helea/story10.png">
+                <img class="story-step" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Página de historia 11" data-src="/media/backgrounds/story-of-helea/story11.png">
+                <img class="story-step" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Página de historia 12" data-src="/media/backgrounds/story-of-helea/story12.png">
+                <img class="story-step" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Página de historia 13" data-src="/media/backgrounds/story-of-helea/story13.png">
+                <img class="story-step" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Página de historia 14" data-src="/media/backgrounds/story-of-helea/story14.png"> 
+                <img class="story-step" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Página de historia 15" data-src="/media/backgrounds/story-of-helea/story15.png">
+                <img class="story-step" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Página de historia 16" data-src="/media/backgrounds/story-of-helea/story16.png">
+                <div id="dialogue-indicator-story" class="dialogue-indicator"></div>
+            </div>
+        </section>
+
+        <!-- Página de logs (actualizaciones del juego) -->
+        <section id="logs-menu" class="out-up hidden">
+
+            <button id="btn-close-logs">
+                <img
+                    src="/media/icons/icon-back-white.png"
+                    alt="Volver"
+                >
+            </button>
+
+            <div class="logs-background-glow"></div>
+
+            <div class="logs-wrapper">
+
+                <div class="logs-header">
+                    <span class="logs-subtitle">HISTORIAL DE VERSIONES</span>
+                    <h1>Novedades</h1>
+                    <p>Últimas mejoras, cambios y actualizaciones del juego</p>
+                </div>
+
+                <!-- Versión 1.3.0 -->
+                <article class="log-card new-update">
+
+                    <div class="log-line"></div>
+
+                    <div class="log-top">
+
+                        <div>
+                            <h2>Versión 1.3.0</h2>
+                            <span class="log-date">
+                                14 Mayo 2026
+                            </span>
+                        </div>
+
+                        <span class="log-dot"></span>
+
+                    </div>
+
+                    <div class="log-block">
+
+                        <span class="log-tag system">
+                            SISTEMA
+                        </span>
+
+                        <ul>
+                            <li>¡Nueva página de récords! Con la llegada de la versión 1.3.0 se ha añadido una nueva sección donde el jugador puede consultar todos sus récords personales.</li>
+                        </ul>
+
+                    </div>
+
+                    <div class="log-block">
+
+                        <span class="log-tag fix">
+                            FIXES
+                        </span>
+
+                        <ul>
+                            <li>Se ha corregido un error que hacía que, al seleccionar "volver a niveles" desde cualquier nivel, la música de fondo seguía sonando sin detenerse.</li>
+                            <li>Nivel 2: Se han terminado de ajustar algunas canciones para que no desvelen partes claves de la letra antes de tiempo.</li>
+                        </ul>
+
+                    </div>
+
+                </article>
+
+                <!-- Versión 1.2.1 -->
+                <article class="log-card new-update">
+
+                    <div class="log-line"></div>
+
+                    <div class="log-top">
+
+                        <div>
+                            <h2>Versión 1.2.1</h2>
+                            <span class="log-date">
+                                12 Mayo 2026
+                            </span>
+                        </div>
+
+                        <span class="log-dot"></span>
+
+                    </div>
+
+                    <div class="log-block">
+
+                        <span class="log-tag gameplay">
+                            JUEGO
+                        </span>
+
+                        <ul>
+                            <li>Nivel 4: Instrucciones de nivel ya disponibles en el menú de niveles.</li>
+                            <li>Nivel 4: Implementada la página de Game Over.</li>
+                            <li>Nivel 4: Ahora, cuando aparece una nueva pista en pantalla, también se reproduce un efecto de sonido.</li>
+                            <li>Nivel 3: Se han ajustado los minijuegos para que se adapten mejor a la dificultad seleccionada por el jugador.</li>
+                        </ul>
+
+                    </div>
+
+                    <div class="log-block">
+
+                        <span class="log-tag system">
+                            SISTEMA
+                        </span>
+
+                        <ul>
+                            <li>Ajustada la cantidad de Helex necesaria para ganar el juego. Antes: 1300 hx. Ahora: 1000 hx.</li>
+                        </ul>
+
+                    </div>
+
+                    <div class="log-block">
+
+                        <span class="log-tag ui">
+                            INTERFAZ
+                        </span>
+
+                        <ul>
+                            <li>Nivel 4: Se ha añadido la miniatura del personaje del Gran Oktopo. Aparecerá en los diálogos.</li>
+                        </ul>
+
+                    </div>
+
+                    <div class="log-block">
+
+                        <span class="log-tag fix">
+                            FIXES
+                        </span>
+
+                        <ul>
+                            <li>Nivel 4: Corregido un error que hacía que el jugador no perdiese si se quedaba sin vidas.</li>
+                            <li>Nivel 4: Corregido un error que hacía que la pantalla de carga del nivel se quedase bloqueada cargando indefinidamente.</li>
+                            <li>Nivel 4: Corregido un error que hacía que la cuenta atrás no se reiniciase correctamente al volver a empezar el nivel.</li>
+                            <li>Corregido un error que hacía que los fondos de los diálogos de los niveles no cambiasen correctamente.</li>
+                        </ul>
+
+                    </div>
+
+                </article>
+
+                <!-- Versión 1.2.0 -->
+                <article class="log-card new-update">
+
+                    <div class="log-line"></div>
+
+                    <div class="log-top">
+
+                        <div>
+                            <h2>Versión 1.2.0</h2>
+                            <span class="log-date">
+                                11 Mayo 2026
+                            </span>
+                        </div>
+
+                        <span class="log-dot"></span>
+
+                    </div>
+
+                    <div class="log-block">
+
+                        <span class="log-tag gameplay">
+                            JUEGO
+                        </span>
+
+                        <ul>
+                            <li>¡Nuevo nivel! Nivel 4 ya disponible. Viaja junto a Airaak al oscuro planeta Underworld y descúbrelo.</li>
+                            <li>Nivel 4: Añadidas 15 palabras nuevas al nivel 4.</li>
+                        </ul>
+
+                    </div>
+
+                    <div class="log-block">
+
+                        <span class="log-tag system">
+                            SISTEMA
+                        </span>
+
+                        <ul>
+                            <li>Ajustada la cantidad de Helex necesaria para ganar el juego. Antes: 2000 hx. Ahora: 1300 hx.</li>
+                            <li>Ajustada la cantidad de niveles del juego. Niveles disponibles actualmente: 4.</li>
+                        </ul>
+
+                    </div>
+
+                    <div class="log-block">
+
+                        <span class="log-tag fix">
+                            FIXES
+                        </span>
+
+                        <ul>
+                            <li>Nivel 2: Corregido un error al reproducir las canciones. Algunas pistas de audio desvelaban la respuesta correcta antes de que el jugador pudiese elegir una opción.</li>
+                            <li>Nivel 2: Se ha ajustado el volumen de las canciones para que suenen todas igual.</li>
+                        </ul>
+
+                    </div>
+
+                </article>
+
+                <!-- Versión 1.1.0 -->
+                <article class="log-card new-update">
+
+                    <div class="log-line"></div>
+
+                    <div class="log-top">
+
+                        <div>
+                            <h2>Versión 1.1.0</h2>
+                            <span class="log-date">
+                                7 Mayo 2026
+                            </span>
+                        </div>
+
+                        <span class="log-dot"></span>
+
+                    </div>
+
+                    <div class="log-block">
+
+                        <span class="log-tag system">
+                            SISTEMA
+                        </span>
+
+                        <ul>
+                            <li>Nuevo sistema de carga y descarga de assets en caché.</li>
+                            <li>Mejoras generales de estabilidad.</li>
+                        </ul>
+
+                    </div>
+
+                    <div class="log-block">
+
+                        <span class="log-tag ui">
+                            INTERFAZ
+                        </span>
+
+                        <ul>
+                            <li>Nueva pantalla de versiones y actualizaciones integrada en el menú principal.</li>
+                            <li>Se ha mejorado la animación de la barra de carga de la Loading Page para hacerla más fluida.</li>
+                            <li>Ahora, cuando aparecen errores al cargar el juego, el jugador puede decidir si desea iniciar el juego igualmente o reintentar la carga completa de los elementos.</li>
+                        </ul>
+
+                    </div>
+
+                    <div class="log-block">
+
+                        <span class="log-tag fix">
+                            FIXES
+                        </span>
+
+                        <ul>
+                            <li>Corregido un error que hacía que algunas imágenes se viesen cortadas o deformadas.</li>
+                        </ul>
+
+                    </div>
+
+                </article>
+
+                <!-- Versión 1.0.1 -->
+                <article class="log-card">
+
+                    <div class="log-line"></div>
+
+                    <div class="log-top">
+
+                        <div>
+                            <h2>Versión 1.0.1</h2>
+
+                            <span class="log-date">
+                                6 Mayo 2026
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <div class="log-block">
+
+                        <span class="log-tag gameplay">
+                            JUEGO
+                        </span>
+
+                        <ul>
+                            <li>Nivel 2: Añadidas 8 canciones nuevas al nivel 2.</li>
+                            <li>Nivel 2: Se ha mejorado el sistema de aleatorización de canciones.</li>
+                        </ul>
+
+                    </div>
+
+                </article>
+
+                <!-- Versión 1.0.0 -->
+                <article class="log-card">
+
+                    <div class="log-line"></div>
+
+                    <div class="log-top">
+
+                        <div>
+                            <h2>Versión 1.0.0</h2>
+
+                            <span class="log-date">
+                                14 Febrero 2026
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <div class="log-block">
+
+                        <span class="log-tag system">
+                            SISTEMA
+                        </span>
+
+                        <ul>
+                            <li>Primer despliegue del juego en Netlify.</li>
+                        </ul>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+        <video id="end-game-video" class="hidden invisible" muted></video>
+
+        <div id="end-game-victory" class="hidden">
+            <h3>FIN DEL JUEGO</h3>
+            <h4>¡Misión cumplida!</h4>
+        </div>
+
+        <video id="credits-video" class="hidden invisible" muted loop></video>
+
+        <section id="credits-page" class="hidden invisible">
+            <h4 class="credit bigger">Un juego de MGR</h4>
+            <p class="credit">Programado y desarrollado con HTML, CSS y JS</p>
+            <p class="credit">Diseño visual con Canva</p>
+            <p class="credit">Montaje de vídeos con Capcut</p>
+            <p class="credit bigger">¡Gracias por jugar!</p>
+        </section>
+    </main>
+
+    <!-- Audios de la introducción -->
+
+    <audio id="background-music-intro" loop preload="auto">
+        <source src="media/music/introduccion.mp3" type="audio/mp3">
+    </audio>
+
+    <audio id="typing-dialogues" preload="auto">
+        <source src="media/music/sound-effects/typing-dialogues.mp3" type="audio/mp3">
+    </audio>
+
+    <audio id="gameover-music-intro" loop preload="auto">
+        <source src="media/music/game-over.mp3" type="audio/mp3">
+    </audio>
+
+    <!-- Audios del menú principal -->
+
+    <audio id="main-menu-music" loop preload="auto">
+        <source src="media/music/menu-principal.mp3" type="audio/mp3">
+    </audio>
+
+    <audio id="helea-story-music" loop preload="auto">
+        <source src="media/music/music-helea-story.mp3" type="audio/mp3">
+    </audio>
+
+    <audio id="button-sound" preload="auto">
+        <source src="media/music/sound-effects/button-effect2.mp3" type="audio/mp3">
+    </audio>
+
+    <audio id="button-sound2" preload="auto">
+        <source src="media/music/sound-effects/button-effect3.mp3" type="audio/mp3">
+    </audio>
+
+    <audio id="button-sound3" preload="auto">
+        <source src="media/music/sound-effects/button-effect.mp3" type="audio/mp3">
+    </audio>
+
+    <audio id="open-chest-waiting" loop preload="auto">
+        <source src="media/music/waiting-chest.mp3" type="audio/mp3">
+    </audio>
+
+    <audio id="open-chest-sound" preload="auto">
+        <source src="media/music/sound-effects/open-chest.mp3" type="audio/mp3">
+    </audio>
+
+    <!-- Audios del mapa de niveles -->
+
+    <audio id="level-unlocked" preload="auto">
+        <source src="media/music/sound-effects/level-unlocked.mp3" type="audio/mp3">
+    </audio>
+
+    <audio id="play-level-sound" preload="auto">
+        <source src="media/music/sound-effects/start-level.mp3" type="audio/mp3">
+    </audio>
+
+    <!-- Audios de carga de nivel -->
+
+    <audio id="loading-level-music" loop preload="auto">
+        <source src="media/music/loading-level.mp3" type="audio/mp3">
+    </audio>
+
+    <!-- Audios del Nivel 1 -->
+
+    <audio id="level1-music-intro" loop preload="auto">
+        <source src="media/music/music-level1-intro.mp3" type="audio/mp3">
+    </audio>
+
+    <audio id="level1-music" loop preload="auto">
+        <source src="media/music/music-level1.mp3" type="audio/mp3">
+    </audio>
+
+    <audio id="level1-crowd" preload="auto">
+        <source src="media/music/sound-effects/crowd.mp3" type="audio/mp3">
+    </audio>
+
+    <audio id="level1-monster1" preload="auto">
+        <source src="media/music/sound-effects/monster-sound1.mp3" type="audio/mp3">
+    </audio>
+
+    <audio id="level1-monster2" preload="auto">
+        <source src="media/music/sound-effects/monster-sound2.mp3" type="audio/mp3">
+    </audio>
+
+    <audio id="level1-monster3" preload="auto">
+        <source src="media/music/sound-effects/monster-sound3.mp3" type="audio/mp3">
+    </audio>
+
+    <audio id="level1-monster4" preload="auto">
+        <source src="media/music/sound-effects/monster-sound4.mp3" type="audio/mp3">
+    </audio>
+
+    <!-- Audios del Nivel 2 -->
+
+    <audio id="level2-music-intro" loop preload="auto">
+        <source src="media/music/music-level2-intro.mp3" type="audio/mp3">
+    </audio>
+
+    <audio id="level2-correct-answer" preload="auto">
+        <source src="media/music/sound-effects/correct-answer.mp3" type="audio/mp3">
+    </audio>
+
+    <audio id="level2-wrong-answer" preload="auto">
+        <source src="media/music/sound-effects/wrong-answer.mp3" type="audio/mp3">
+    </audio>
+
+    <!-- Audios del Nivel 3 -->
+
+    <audio id="level3-music-intro" loop preload="auto">
+        <source src="media/music/music-level3-intro.mp3" type="audio/mp3">
+    </audio>
+
+    <audio id="level3-music" loop preload="auto">
+        <source src="media/music/music-level3.mp3" type="audio/mp3">
+    </audio>
+
+    <audio id="landing-sound" preload="auto">
+        <source src="media/music/sound-effects/landing-spaceship.mp3" type="audio/mp3">
+    </audio>
+
+    <audio id="error-landing-sound" preload="auto">
+        <source src="media/music/sound-effects/error-landing.m4a" type="audio/mp3">
+    </audio>
+
+    <!-- Audios del Nivel 4 -->
+
+    <audio id="level4-music-intro" loop preload="auto">
+        <source src="media/music/music-level4-intro.mp3" type="audio/mp3">
+    </audio>
+
+    <audio id="level4-music" loop preload="auto">
+        <source src="media/music/music-level4.mp3" type="audio/mp3">
+    </audio>
+
+    <audio id="new-hint-sound" preload="auto">
+        <source src="media/music/sound-effects/new-hint.mp3" type="audio/mp3">
+    </audio>
+
+    <!-- Audios de la página de final de nivel (resumen) -->
+
+    <audio id="level-completed-sound" preload="auto">
+        <source src="media/music/sound-effects/level-completed.mp3" type="audio/mp3">
+    </audio>
+
+    <audio id="new-record-voice-sound" preload="auto">
+        <source src="media/music/sound-effects/new-record-voice.mp3" type="audio/mp3">
+    </audio>
+
+    <audio id="new-record-sound" preload="auto">
+        <source src="media/music/sound-effects/new-record.mp3" type="audio/mp3">
+    </audio>
+
+    <audio id="level-resume-music" loop preload="auto">
+        <source src="media/music/resume-level.mp3" type="audio/mp3">
+    </audio>
+
+    <!-- Audios de fin del juego -->
+
+    <audio id="credits-music" loop preload="auto">
+        <source src="media/music/creditos.mp3" type="audio/mp3">
+    </audio>
+
+    <audio id="end-game-cinematic-music" preload="auto">
+        <source src="media/music/end-game-cinematic.mp3" type="audio/mp3">
+    </audio>
+
+    <!-- Diálogos introducción -->
+
+    <audio id="intro-voice1" preload="auto">
+        <source src="media/music/dialogues/intro-voice1.m4a">
+    </audio>
+
+    <audio id="intro-voice2" preload="auto">
+        <source src="media/music/dialogues/intro-voice2.m4a">
+    </audio>
+
+    <audio id="intro-voice3" preload="auto">
+        <source src="media/music/dialogues/intro-voice3.mp3">
+    </audio>
+
+    <audio id="intro-voice4" preload="auto">
+        <source src="media/music/dialogues/intro-voice4.mp3">
+    </audio>
+
+    <audio id="intro-voice5" preload="auto">
+        <source src="media/music/dialogues/intro-voice5.mp3">
+    </audio>
+
+    <audio id="intro-voice6" preload="auto">
+        <source src="media/music/dialogues/intro-voice6.mp3">
+    </audio>
+
+    <audio id="intro-voice7" preload="auto">
+        <source src="media/music/dialogues/intro-voice7.mp3">
+    </audio>
+
+    <audio id="intro-voice8" preload="auto">
+        <source src="media/music/dialogues/intro-voice8.mp3">
+    </audio>
+
+    <audio id="intro-voice9" preload="auto">
+        <source src="media/music/dialogues/intro-voice9.mp3">
+    </audio>
+
+    <audio id="intro-voice10" preload="auto">
+        <source src="media/music/dialogues/intro-voice10.mp3">
+    </audio>
+
+    <audio id="intro-voice11" preload="auto">
+        <source src="media/music/dialogues/intro-voice11.mp3">
+    </audio>
+
+    <audio id="intro-voice12" preload="auto">
+        <source src="media/music/dialogues/intro-voice12.mp3">
+    </audio>
+    
+    <!-- Librería de alertas para el jugador -->
+
+    <script src="https://cdn.jsdelivr.net/gh/noumanqamar450/alertbox@main/version/1.0.2/alertbox.min.js"></script>
+     
+</body>
+</html>
