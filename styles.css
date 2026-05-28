@@ -989,29 +989,85 @@ h1, h2, h3, button {
   background-size: cover;
 }
 
-#starting-page.background-bedroom {
-  background-image: url("/media/backgrounds/bedroom.png");
+#starting-page.background-bedroom-male {
+  background-image: url("/media/backgrounds/bedroom-male.png");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-#starting-page.background-bed {
-  background-image: url("/media/backgrounds/bed.png");
+#starting-page.background-bedroom-female {
+  background-image: url("/media/backgrounds/bedroom-female.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#starting-page.background-bedroom-nobinary {
+  background-image: url("/media/backgrounds/bedroom-nobinary.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#starting-page.background-bed-male {
+  background-image: url("/media/backgrounds/bed-male.png");
   background-position: center top;
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-#starting-page.background-window {
-  background-image: url("/media/backgrounds/window.png");
+#starting-page.background-bed-female {
+  background-image: url("/media/backgrounds/bed-female.png");
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#starting-page.background-bed-nobinary {
+  background-image: url("/media/backgrounds/bed-nobinary.png");
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#starting-page.background-window-male {
+  background-image: url("/media/backgrounds/window-male.png");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-#starting-page.background-black {
-  background-image: url("/media/backgrounds/bedroom-dark.png");
+#starting-page.background-window-female {
+  background-image: url("/media/backgrounds/window-female.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#starting-page.background-window-nobinary {
+  background-image: url("/media/backgrounds/window-nobinary.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#starting-page.background-black-male {
+  background-image: url("/media/backgrounds/bedroom-dark-male.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#starting-page.background-black-female {
+  background-image: url("/media/backgrounds/bedroom-dark-female.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#starting-page.background-black-nobinary {
+  background-image: url("/media/backgrounds/bedroom-dark-nobinary.png");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;

@@ -1397,11 +1397,19 @@ const mainMenuElements = [
     "/media/backgrounds/interior-nave-off.png",
     "/media/backgrounds/spaceship-window.jpg",
     "/media/backgrounds/helea-outside.png",
-    "/media/backgrounds/bed.png",
-    "/media/backgrounds/bedroom.png",
-    "/media/backgrounds/bedroom-dark.png",
+    "/media/backgrounds/bed-female.png",
+    "/media/backgrounds/bed-male.png",
+    "/media/backgrounds/bed-nobinary.png",
+    "/media/backgrounds/bedroom-female.png",
+    "/media/backgrounds/bedroom-male.png",
+    "/media/backgrounds/bedroom-nobinary.png",
+    "/media/backgrounds/bedroom-dark-male.png",
+    "/media/backgrounds/bedroom-dark-female.png",
+    "/media/backgrounds/bedroom-dark-nobinary.png",
     "/media/backgrounds/game-over-dark.png",
-    "/media/backgrounds/window.png",
+    "/media/backgrounds/window-male.png",
+    "/media/backgrounds/window-female.png",
+    "/media/backgrounds/window-nobinary.png",
     "/media/backgrounds/helea-story-loading.png",
 
     "/media/icons/icon-back.png",
@@ -1499,7 +1507,9 @@ const level1Elements = [
     "/media/backgrounds/level-backgrounds/level1.png",
     "/media/backgrounds/level-backgrounds/level1-dance.png",
     
-    "/media/backgrounds/game-over-level1.png",
+    "/media/backgrounds/game-over-level1-male.png",
+    "/media/backgrounds/game-over-level1-female.png",
+    "/media/backgrounds/game-over-level1-nobinary.png",
     
     "/media/img/level1/monster1.png",
     "/media/img/level1/monster2.png",
@@ -1518,7 +1528,9 @@ const level2Elements = [
     "/media/backgrounds/level-backgrounds/level2-3.png",
     "/media/backgrounds/level-backgrounds/level2-space.png",
 
-    "/media/backgrounds/game-over-level2.png",
+    "/media/backgrounds/game-over-level2-male.png",
+    "/media/backgrounds/game-over-level2-female.png",
+    "/media/backgrounds/game-over-level2-nobinary.png",
 
     "/media/img/headphones.png",
     "/media/img/astronaut.png",
@@ -1535,7 +1547,9 @@ const level3Elements = [
     "/media/backgrounds/level-backgrounds/level3-6.png",
     "/media/backgrounds/level-backgrounds/level3-controls.png",
 
-    "/media/backgrounds/game-over-level3.png",
+    "/media/backgrounds/game-over-level3-male.png",
+    "/media/backgrounds/game-over-level3-female.png",
+    "/media/backgrounds/game-over-level3-nobinary.png",
 
     "/media/img/level3/speed-controller1.png",
     "/media/img/level3/speed-controller2.png",
@@ -1569,7 +1583,9 @@ const level4Elements = [
     "/media/img/oktopo.png",
     "/media/img/coffee-cup.png",
 
-    "/media/backgrounds/game-over-level4.png",
+    "/media/backgrounds/game-over-level4-male.png",
+    "/media/backgrounds/game-over-level4-female.png",
+    "/media/backgrounds/game-over-level4-nobinary.png",
 ];
 
 // TEXTOS DE LOS DIÁLOGOS
@@ -3806,10 +3822,18 @@ function resetEscenaIntro() {
         "background-helea-destroyed",
         "background-ventana-nave",
         "background-exterior-helea",
-        "background-black",
-        "background-bedroom",
-        "background-bed",
-        "background-window"
+        "background-black-male",
+        "background-black-female",
+        "background-black-nobinary",
+        "background-bedroom-male",
+        "background-bedroom-female",
+        "background-bedroom-nobinary",
+        "background-bed-male",
+        "background-bed-female",
+        "background-bed-nobinary",
+        "background-window-male",
+        "background-window-female",
+        "background-window-nobinary",
     );
 
     btnAnteriorDialog.classList.remove("invisible");
@@ -3936,19 +3960,45 @@ function cambiarUI() {
         break;
 
         case "fondoNegro":
-            startingPage.classList.add("background-black");
+            if(gameState.characterSelected === "male") {
+                startingPage.classList.add("background-black-male");
+            }else if(gameState.characterSelected === "female") {
+                startingPage.classList.add("background-black-female");
+            }else {
+                startingPage.classList.add("background-black-nobinary");
+            }
         break;
 
         case "dormitorio":
-            startingPage.classList.add("background-bedroom");
+            if(gameState.characterSelected === "male") {
+                startingPage.classList.add("background-bedroom-male");
+            }else if(gameState.characterSelected === "female") {
+                startingPage.classList.add("background-bedroom-female");
+            }else {
+                startingPage.classList.add("background-bedroom-nobinary");
+            }
         break;
 
         case "cama":
-            startingPage.classList.add("background-bed");
+            if(gameState.characterSelected === "male") {
+                startingPage.classList.add("background-bed-male");
+            }else if(gameState.characterSelected === "female") {
+                startingPage.classList.add("background-bed-female");
+            }else {
+                startingPage.classList.add("background-bed-nobinary");
+            }
         break;
 
         case "ventanaDormitorio":
-            startingPage.classList.add("background-window");
+            
+            if(gameState.characterSelected === "male") {
+                startingPage.classList.add("background-window-male");
+            }else if(gameState.characterSelected === "female") {
+                startingPage.classList.add("background-window-female");
+            }else {
+                startingPage.classList.add("background-window-nobinary");
+            }
+
             introEnded = true;
         break;
 
@@ -4442,7 +4492,15 @@ function setGameOver(situation) {
 
     if(situation === "level1") {
         iconOver.src = "/media/img/disco-ball.png";
-        gameOverPage.style.backgroundImage = "url('/media/backgrounds/game-over-level1.png')";
+
+        if(gameState.characterSelected === "male") {
+            gameOverPage.style.backgroundImage = "url('/media/backgrounds/game-over-level1-male.png')";
+        }else if(gameState.characterSelected === "female") {
+            gameOverPage.style.backgroundImage = "url('/media/backgrounds/game-over-level1-female.png')";
+        }else {
+            gameOverPage.style.backgroundImage = "url('/media/backgrounds/game-over-level1-nobinary.png')";
+        }
+        
         gameOverPage.style.backgroundPosition = "center center";
         mensajeFeedback.textContent = "La batalla de ritmo fue intensa. Grok está decepcionado, y ha decidido no compartir el Helex contigo. La hostilidad de los Rockots te sorpende, pero el ritmo y el baile parece ser algo sagrado para estas criaturas.";
         endGameTitle.style.color = "#f9a59b";
@@ -4450,15 +4508,31 @@ function setGameOver(situation) {
 
     if(situation === "level2") {
         iconOver.src = "/media/img/headphones.png";
-        gameOverPage.style.backgroundImage = "url('/media/backgrounds/game-over-level2.png')";
+        
+        if(gameState.characterSelected === "male") {
+            gameOverPage.style.backgroundImage = "url('/media/backgrounds/game-over-level2-male.png')";
+        }else if(gameState.characterSelected === "female") {
+            gameOverPage.style.backgroundImage = "url('/media/backgrounds/game-over-level2-female.png')";
+        }else {
+            gameOverPage.style.backgroundImage = "url('/media/backgrounds/game-over-level2-nobinary.png')";
+        }
+
         gameOverPage.style.backgroundPosition = "center center";
-        mensajeFeedback.textContent = "Los Baoo os pillaron por sorpresa. Intentaste comunicarte con ellos, pero su lenguaje era complejo y fascinante al mismo tiempo. ¿Cómo podían imitar tan bien a Chiara? Sigues flipando cada vez que lo piensas.";
+        mensajeFeedback.textContent = "Los Baoo os pillaron por sorpresa. Intentaste comunicarte con ellos, pero su lenguaje era complejo y fascinante al mismo tiempo. ¿Cómo podían imitar tan bien a Coldplay? Sigues flipando cada vez que lo piensas.";
         endGameTitle.style.color = "#cd5151";
     };
 
     if(situation === "level3") {
         iconOver.src = "/media/img/red-button.png";
-        gameOverPage.style.backgroundImage = "url('/media/backgrounds/game-over-level3.png')";
+        
+        if(gameState.characterSelected === "male") {
+            gameOverPage.style.backgroundImage = "url('/media/backgrounds/game-over-level3-male.png')";
+        }else if(gameState.characterSelected === "female") {
+            gameOverPage.style.backgroundImage = "url('/media/backgrounds/game-over-level3-female.png')";
+        }else {
+            gameOverPage.style.backgroundImage = "url('/media/backgrounds/game-over-level3-nobinary.png')";
+        }
+
         gameOverPage.style.backgroundPosition = "center center";
         mensajeFeedback.textContent = "Fue terrible. El casco de la nave no aguantó la enorme presión atmosférica del planeta Sunder y se descompuso en mil pedazos. Ya no queda nada de vuestro vehículo. Abres los ojos y todo es oscuridad, parece que flotaréis sin rumbo por el espacio durante los próximos 6000 años.";
         endGameTitle.style.color = "#f7dc5a";
@@ -4466,7 +4540,15 @@ function setGameOver(situation) {
 
     if(situation === "level4") {
         iconOver.src = "/media/img/coffee-cup.png";
-        gameOverPage.style.backgroundImage = "url('/media/backgrounds/game-over-level4.png')";
+        
+        if(gameState.characterSelected === "male") {
+            gameOverPage.style.backgroundImage = "url('/media/backgrounds/game-over-level4-male.png')";
+        }else if(gameState.characterSelected === "female") {
+            gameOverPage.style.backgroundImage = "url('/media/backgrounds/game-over-level4-female.png')";
+        }else {
+            gameOverPage.style.backgroundImage = "url('/media/backgrounds/game-over-level4-nobinary.png')";
+        }
+
         gameOverPage.style.backgroundPosition = "center center";
         mensajeFeedback.textContent = "El Gran Oktopo era mucho más astuto de lo que os habíais imaginado. Os hipnotizó fácilmente con sus acertijos y caísteis en su trampa. ¿Realmente sabe bien la carne humana? Un tentáculo te rodea la pierna. El pulpo está a punto de descubrirlo.";
         endGameTitle.style.color = "#BD6ED9";
