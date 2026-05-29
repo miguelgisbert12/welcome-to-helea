@@ -118,8 +118,6 @@ const menuPrincipal = document.querySelector("#main-page");
 const menuMusic = document.querySelector("#main-menu-music");
 const heleaStoryMusic = document.querySelector("#helea-story-music");
 const mainMenuBlocks = document.querySelectorAll(".main-menu-block");
-const openChestWaiting = document.querySelector("#open-chest-waiting");
-const openChestSound = document.querySelector("#open-chest-sound");
 const selectSound2 = document.querySelector("#button-sound2");
 const backgroundScene = document.querySelector(".main-background-video");
 const starsBackground = document.querySelector("#stars-background-main");
@@ -2757,8 +2755,6 @@ function configurarAudio() {
     menuMusic.volumeMax = 0.5;
     heleaStoryMusic.volume = 0.8;
     heleaStoryMusic.volumeMax = 0.8;
-    openChestWaiting.volume = 0.5;
-    openChestWaiting.volumeMax = 0.5;
     backgroundMusicIntro.volume = 0.6;
     backgroundMusicIntro.volumeMax = 0.6;
     gameOverMusicIntro.volume = 0.5;
