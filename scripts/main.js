@@ -134,7 +134,6 @@ const tituloPrincipal = document.querySelector("#main-header h1");
 const iconoAjustes = document.querySelector("#icon-ajustes");
 const iconoLlave = document.querySelector("#icon-llave");
 const menuAjustes = document.querySelector("#settings-banner");
-const menuAudiosBirthday = document.querySelector("#audios-birthday");
 const characterMain = document.querySelector("#main-character");
 const imgCharacter = document.querySelector("#character-img");
 const moon = document.querySelector("#moon-img");
@@ -162,6 +161,7 @@ const greetingsGuide = document.querySelector("#greetings-guide");
 const btnCloseStory = document.querySelector("#btn-close-story-menu");
 const btnArchivosHelea = document.querySelector("#archivos-helea-btn");
 const btnPrimerContacto = document.querySelector("#primer-contacto-btn");
+const storyStepChanging = document.querySelector("#story-step-changing");
 
 // Variables del menú de niveles
 
@@ -331,138 +331,142 @@ const steps = document.querySelectorAll(".instruction-step");
 const nextBtn = document.querySelector("#next-inst");
 const prevBtn = document.querySelector("#prev-inst");
 
-const levelInstructions = {
-    1: [
-        {
-            img: "/media/backgrounds/instructions/nivel1/instrucciones-1-1.png",
-            text1: "Nivel 1",
-            text2: "Instrucciones"
-        },
-        {
-            img: "/media/backgrounds/instructions/nivel1/instrucciones-1-2.png",
-            text1: "Cada Rockot representa un color",
-            text2: "¡Fíjate bien!"
-        },
-        {
-            img: "/media/backgrounds/instructions/nivel1/instrucciones-1-3.png",
-            text1: "Observa la secuencia",
-            text2: "Memorízala"
-        },
-        {
-            img: "/media/backgrounds/instructions/nivel1/instrucciones-1-4.png",
-            text1: "Toca los Rockots en el orden correcto",
-            text2: "Repítela"
-        },
-        {
-            img: "/media/backgrounds/instructions/nivel1/instrucciones-1-5.png",
-            text1: "No te quedes sin vidas",
-            text2: "¡Tienes sólo 3!"
-        },
-        {
-            img: "/media/backgrounds/instructions/nivel1/instrucciones-1-6.png",
-            text1: "Llega hasta la última ronda",
-            text2: "Y consigue Helex"
-        }
-    ],
+function createLevelInstructions() {
 
-    2: [
-        {
-            img: "/media/backgrounds/instructions/nivel2/instrucciones-2-1.png",
-            text1: "Nivel 2",
-            text2: "Instrucciones"
-        },
-        {
-            img: "/media/backgrounds/instructions/nivel2/instrucciones-2-2.png",
-            text1: "A los Baoo les encanta la música",
-            text2: "Escucha la canción"
-        },
-        {
-            img: "/media/backgrounds/instructions/nivel2/instrucciones-2-3.png",
-            text1: "Cuando la música pare",
-            text2: "Completa la letra"
-        },
-        {
-            img: "/media/backgrounds/instructions/nivel2/instrucciones-2-4.png",
-            text1: "No hay mucho tiempo",
-            text2: "Cuidado"
-        },
-        {
-            img: "/media/backgrounds/instructions/nivel2/instrucciones-2-5.png",
-            text1: "No te quedes sin vidas",
-            text2: "¡Tienes sólo 3!"
-        },
-        {
-            img: "/media/backgrounds/instructions/nivel2/instrucciones-2-6.png",
-            text1: "Llega hasta la última ronda",
-            text2: "Y consigue Helex"
-        }
-    ],
+    return {
 
-    3: [
-        {
-            img: "/media/backgrounds/instructions/nivel3/instrucciones-3-1.png",
-            text1: "Nivel 3",
-            text2: "Instrucciones"
-        },
-        {
-            img: "/media/backgrounds/instructions/nivel3/instrucciones-3-2.png",
-            text1: "Acelera con cuidado",
-            text2: "Mantén la velocidad"
-        },
-        {
-            img: "/media/backgrounds/instructions/nivel3/instrucciones-3-3.png",
-            text1: "Déjalo impecable",
-            text2: "Limpia la cabina"
-        },
-        {
-            img: "/media/backgrounds/instructions/nivel3/instrucciones-3-4.png",
-            text1: "¡Que no exploten!",
-            text2: "Enfría los módulos"
-        },
-        {
-            img: "/media/backgrounds/instructions/nivel3/instrucciones-3-5.png",
-            text1: "Gira los diales",
-            text2: "Descifra el código"
-        },
-        {
-            img: "/media/backgrounds/instructions/nivel3/instrucciones-3-6.png",
-            text1: "Estabiliza las alas",
-            text2: "Y aterriza la nave"
-        }
-    ],
+        1: [
+            {
+                img: `/media/backgrounds/instructions/nivel1/instrucciones-1-1-${gameState.characterSelected}.png`,
+                text1: "Nivel 1",
+                text2: "Instrucciones"
+            },
+            {
+                img: "/media/backgrounds/instructions/nivel1/instrucciones-1-2.png",
+                text1: "Cada Rockot representa un color",
+                text2: "¡Fíjate bien!"
+            },
+            {
+                img: "/media/backgrounds/instructions/nivel1/instrucciones-1-3.png",
+                text1: "Observa la secuencia",
+                text2: "Memorízala"
+            },
+            {
+                img: `/media/backgrounds/instructions/nivel1/instrucciones-1-4-${gameState.characterSelected}.png`,
+                text1: "Toca los Rockots en el orden correcto",
+                text2: "Repítela"
+            },
+            {
+                img: `/media/backgrounds/instructions/nivel1/instrucciones-1-5-${gameState.characterSelected}.png`,
+                text1: "No te quedes sin vidas",
+                text2: "¡Tienes sólo 3!"
+            },
+            {
+                img: `/media/backgrounds/instructions/nivel1/instrucciones-1-6-${gameState.characterSelected}.png`,
+                text1: "Llega hasta la última ronda",
+                text2: "Y consigue Helex"
+            }
+        ],
 
-    4: [
-        {
-            img: "/media/backgrounds/instructions/nivel4/instrucciones-4-1.png",
-            text1: "Nivel 4",
-            text2: "Instrucciones"
-        },
-        {
-            img: "/media/backgrounds/instructions/nivel4/instrucciones-4-2.png",
-            text1: "Recibe pistas",
-            text2: "Adivina la palabra secreta"
-        },
-        {
-            img: "/media/backgrounds/instructions/nivel4/instrucciones-4-3.png",
-            text1: "Pide nuevas pistas",
-            text2: "Pero pierde Helex..."
-        },
-        {
-            img: "/media/backgrounds/instructions/nivel4/instrucciones-4-4.png",
-            text1: "Escribe la respuesta",
-            text2: "¡Y comprueba!"
-        },
-        {
-            img: "/media/backgrounds/instructions/nivel4/instrucciones-4-5.png",
-            text1: "7 pistas por ronda",
-            text2: "Pide las que necesites"
-        },
-        {
-            img: "/media/backgrounds/instructions/nivel4/instrucciones-4-6.png",
-            text1: "Adivina las palabras",
-            text2: "Y consigue Helex"
-        }
-    ],
+        2: [
+            {
+                img: `/media/backgrounds/instructions/nivel2/instrucciones-2-1-${gameState.characterSelected}.png`,
+                text1: "Nivel 2",
+                text2: "Instrucciones"
+            },
+            {
+                img: "/media/backgrounds/instructions/nivel2/instrucciones-2-2.png",
+                text1: "A los Baoo les encanta la música",
+                text2: "Escucha la canción"
+            },
+            {
+                img: "/media/backgrounds/instructions/nivel2/instrucciones-2-3.png",
+                text1: "Cuando la música pare",
+                text2: "Completa la letra"
+            },
+            {
+                img: "/media/backgrounds/instructions/nivel2/instrucciones-2-4.png",
+                text1: "No hay mucho tiempo",
+                text2: "Cuidado"
+            },
+            {
+                img: `/media/backgrounds/instructions/nivel2/instrucciones-2-5-${gameState.characterSelected}.png`,
+                text1: "No te quedes sin vidas",
+                text2: "¡Tienes sólo 3!"
+            },
+            {
+                img: `/media/backgrounds/instructions/nivel2/instrucciones-2-6-${gameState.characterSelected}.png`,
+                text1: "Llega hasta la última ronda",
+                text2: "Y consigue Helex"
+            }
+        ],
+
+        3: [
+            {
+                img: `/media/backgrounds/instructions/nivel3/instrucciones-3-1-${gameState.characterSelected}.png`,
+                text1: "Nivel 3",
+                text2: "Instrucciones"
+            },
+            {
+                img: "/media/backgrounds/instructions/nivel3/instrucciones-3-2.png",
+                text1: "Acelera con cuidado",
+                text2: "Mantén la velocidad"
+            },
+            {
+                img: "/media/backgrounds/instructions/nivel3/instrucciones-3-3.png",
+                text1: "Déjalo impecable",
+                text2: "Limpia la cabina"
+            },
+            {
+                img: "/media/backgrounds/instructions/nivel3/instrucciones-3-4.png",
+                text1: "¡Que no exploten!",
+                text2: "Enfría los módulos"
+            },
+            {
+                img: "/media/backgrounds/instructions/nivel3/instrucciones-3-5.png",
+                text1: "Gira los diales",
+                text2: "Descifra el código"
+            },
+            {
+                img: "/media/backgrounds/instructions/nivel3/instrucciones-3-6.png",
+                text1: "Estabiliza las alas",
+                text2: "Y aterriza la nave"
+            }
+        ],
+
+        4: [
+            {
+                img: `/media/backgrounds/instructions/nivel4/instrucciones-4-1-${gameState.characterSelected}.png`,
+                text1: "Nivel 4",
+                text2: "Instrucciones"
+            },
+            {
+                img: `/media/backgrounds/instructions/nivel4/instrucciones-4-2-${gameState.characterSelected}.png`,
+                text1: "Recibe pistas",
+                text2: "Adivina la palabra secreta"
+            },
+            {
+                img: "/media/backgrounds/instructions/nivel4/instrucciones-4-3.png",
+                text1: "Pide nuevas pistas",
+                text2: "Pero pierde Helex..."
+            },
+            {
+                img: `/media/backgrounds/instructions/nivel4/instrucciones-4-4-${gameState.characterSelected}.png`,
+                text1: "Escribe la respuesta",
+                text2: "¡Y comprueba!"
+            },
+            {
+                img: "/media/backgrounds/instructions/nivel4/instrucciones-4-5.png",
+                text1: "7 pistas por ronda",
+                text2: "Pide las que necesites"
+            },
+            {
+                img: `/media/backgrounds/instructions/nivel4/instrucciones-4-6-${gameState.characterSelected}.png`,
+                text1: "Adivina las palabras",
+                text2: "Y consigue Helex"
+            }
+        ],
+    };
 };
 
 // Variables de la guía inicial
@@ -839,15 +843,6 @@ const loadingMessages = [
     "Analizando planetas...",
     "Escapando del Gran Oktopo...",
 ]
-
-// Audios de felicitación de cumpleaños
-
-const personAudios = {
-    miguel: "/media/music/audio-messages/audio-miguel.mp3",
-    alba: "/media/music/audio-messages/audio-alba.mp3",
-    carmina: "/media/music/audio-messages/audio-carmina.mp3",
-    laura: "/media/music/audio-messages/audio-laura.mp3",
-};
 
 // Playlist de música Nivel 2
 
@@ -1361,30 +1356,57 @@ const mainMenuElements = [
     "media/assets/asset24.png",
     "media/assets/asset25.png",
 
-    "/media/backgrounds/instructions/nivel1/instrucciones-1-1.png",
+    "/media/backgrounds/instructions/nivel1/instrucciones-1-1-female.png",
+    "/media/backgrounds/instructions/nivel1/instrucciones-1-1-male.png",
+    "/media/backgrounds/instructions/nivel1/instrucciones-1-1-nobinary.png",
     "/media/backgrounds/instructions/nivel1/instrucciones-1-2.png",
     "/media/backgrounds/instructions/nivel1/instrucciones-1-3.png",
-    "/media/backgrounds/instructions/nivel1/instrucciones-1-4.png",
-    "/media/backgrounds/instructions/nivel1/instrucciones-1-5.png",
-    "/media/backgrounds/instructions/nivel1/instrucciones-1-6.png",
-    "/media/backgrounds/instructions/nivel2/instrucciones-2-1.png",
+    "/media/backgrounds/instructions/nivel1/instrucciones-1-4-female.png",
+    "/media/backgrounds/instructions/nivel1/instrucciones-1-4-male.png",
+    "/media/backgrounds/instructions/nivel1/instrucciones-1-4-nobinary.png",
+    "/media/backgrounds/instructions/nivel1/instrucciones-1-5-female.png",
+    "/media/backgrounds/instructions/nivel1/instrucciones-1-5-male.png",
+    "/media/backgrounds/instructions/nivel1/instrucciones-1-5-nobinary.png",
+    "/media/backgrounds/instructions/nivel1/instrucciones-1-6-female.png",
+    "/media/backgrounds/instructions/nivel1/instrucciones-1-6-male.png",
+    "/media/backgrounds/instructions/nivel1/instrucciones-1-6-nobinary.png",
+
+    "/media/backgrounds/instructions/nivel2/instrucciones-2-1-female.png",
+    "/media/backgrounds/instructions/nivel2/instrucciones-2-1-male.png",
+    "/media/backgrounds/instructions/nivel2/instrucciones-2-1-nobinary.png",
     "/media/backgrounds/instructions/nivel2/instrucciones-2-2.png",
     "/media/backgrounds/instructions/nivel2/instrucciones-2-3.png",
     "/media/backgrounds/instructions/nivel2/instrucciones-2-4.png",
-    "/media/backgrounds/instructions/nivel2/instrucciones-2-5.png",
-    "/media/backgrounds/instructions/nivel2/instrucciones-2-6.png",
-    "/media/backgrounds/instructions/nivel3/instrucciones-3-1.png",
+    "/media/backgrounds/instructions/nivel2/instrucciones-2-5-female.png",
+    "/media/backgrounds/instructions/nivel2/instrucciones-2-5-male.png",
+    "/media/backgrounds/instructions/nivel2/instrucciones-2-5-nobinary.png",
+    "/media/backgrounds/instructions/nivel2/instrucciones-2-6-female.png",
+    "/media/backgrounds/instructions/nivel2/instrucciones-2-6-male.png",
+    "/media/backgrounds/instructions/nivel2/instrucciones-2-6-nobinary.png",
+
+    "/media/backgrounds/instructions/nivel3/instrucciones-3-1-female.png",
+    "/media/backgrounds/instructions/nivel3/instrucciones-3-1-male.png",
+    "/media/backgrounds/instructions/nivel3/instrucciones-3-1-nobinary.png",
     "/media/backgrounds/instructions/nivel3/instrucciones-3-2.png",
     "/media/backgrounds/instructions/nivel3/instrucciones-3-3.png",
     "/media/backgrounds/instructions/nivel3/instrucciones-3-4.png",
     "/media/backgrounds/instructions/nivel3/instrucciones-3-5.png",
     "/media/backgrounds/instructions/nivel3/instrucciones-3-6.png",
-    "/media/backgrounds/instructions/nivel4/instrucciones-4-1.png",
-    "/media/backgrounds/instructions/nivel4/instrucciones-4-2.png",
+
+    "/media/backgrounds/instructions/nivel4/instrucciones-4-1-female.png",
+    "/media/backgrounds/instructions/nivel4/instrucciones-4-1-male.png",
+    "/media/backgrounds/instructions/nivel4/instrucciones-4-1-nobinary.png",
+    "/media/backgrounds/instructions/nivel4/instrucciones-4-2-female.png",
+    "/media/backgrounds/instructions/nivel4/instrucciones-4-2-male.png",
+    "/media/backgrounds/instructions/nivel4/instrucciones-4-2-nobinary.png",
     "/media/backgrounds/instructions/nivel4/instrucciones-4-3.png",
-    "/media/backgrounds/instructions/nivel4/instrucciones-4-4.png",
+    "/media/backgrounds/instructions/nivel4/instrucciones-4-4-female.png",
+    "/media/backgrounds/instructions/nivel4/instrucciones-4-4-male.png",
+    "/media/backgrounds/instructions/nivel4/instrucciones-4-4-nobinary.png",
     "/media/backgrounds/instructions/nivel4/instrucciones-4-5.png",
-    "/media/backgrounds/instructions/nivel4/instrucciones-4-6.png",
+    "/media/backgrounds/instructions/nivel4/instrucciones-4-6-female.png",
+    "/media/backgrounds/instructions/nivel4/instrucciones-4-6-male.png",
+    "/media/backgrounds/instructions/nivel4/instrucciones-4-6-nobinary.png",
 
     "/media/backgrounds/loading-pages/level1.png",
     "/media/backgrounds/loading-pages/level2.png",
@@ -1484,7 +1506,9 @@ const heleaStoryElements = [
     "/media/backgrounds/story-of-helea/story11.png",
     "/media/backgrounds/story-of-helea/story12.png",
     "/media/backgrounds/story-of-helea/story13.png",
-    "/media/backgrounds/story-of-helea/story14.png",
+    "/media/backgrounds/story-of-helea/story14-female.png",
+    "/media/backgrounds/story-of-helea/story14-male.png",
+    "/media/backgrounds/story-of-helea/story14-nobinary.png",
     "/media/backgrounds/story-of-helea/story15.png",
     "/media/backgrounds/story-of-helea/story16.png",
 ];
@@ -1540,11 +1564,15 @@ const level2Elements = [
 const level3Elements = [
 
     "/media/backgrounds/level-backgrounds/level3-1.png",
-    "/media/backgrounds/level-backgrounds/level3-2.png",
+    "/media/backgrounds/level-backgrounds/level3-2-female.png",
+    "/media/backgrounds/level-backgrounds/level3-2-male.png",
+    "/media/backgrounds/level-backgrounds/level3-2-nobinary.png",
     "/media/backgrounds/level-backgrounds/level3-3.png",
     "/media/backgrounds/level-backgrounds/level3-4.png",
     "/media/backgrounds/level-backgrounds/level3-5.png",
-    "/media/backgrounds/level-backgrounds/level3-6.png",
+    "/media/backgrounds/level-backgrounds/level3-6-female.png",
+    "/media/backgrounds/level-backgrounds/level3-6-male.png",
+    "/media/backgrounds/level-backgrounds/level3-6-nobinary.png",
     "/media/backgrounds/level-backgrounds/level3-controls.png",
 
     "/media/backgrounds/game-over-level3-male.png",
@@ -1573,9 +1601,15 @@ const level4Elements = [
 
     "/media/backgrounds/level-backgrounds/level4-1.png",
     "/media/backgrounds/level-backgrounds/level4-2.png",
-    "/media/backgrounds/level-backgrounds/level4-3.png",
-    "/media/backgrounds/level-backgrounds/level4-4.png",
-    "/media/backgrounds/level-backgrounds/level4-5.png",
+    "/media/backgrounds/level-backgrounds/level4-3-female.png",
+    "/media/backgrounds/level-backgrounds/level4-3-male.png",
+    "/media/backgrounds/level-backgrounds/level4-3-nobinary.png",
+    "/media/backgrounds/level-backgrounds/level4-4-female.png",
+    "/media/backgrounds/level-backgrounds/level4-4-male.png",
+    "/media/backgrounds/level-backgrounds/level4-4-nobinary.png",
+    "/media/backgrounds/level-backgrounds/level4-5-female.png",
+    "/media/backgrounds/level-backgrounds/level4-5-male.png",
+    "/media/backgrounds/level-backgrounds/level4-5-nobinary.png",
     "/media/backgrounds/level-backgrounds/level4-6.png",
     "/media/backgrounds/level-backgrounds/level4-7.png",
     "/media/backgrounds/level-backgrounds/level4-boat.png",
@@ -1635,8 +1669,7 @@ const dialogosIntroBase = [
             nobinary: "Jajaja pobre, siento tanto lío, debes estar un poco desconcertade. Deja que te lo explique todo."
         },  
         emotion: "normal",
-        scene: "interiorNave",
-        voice: "intro-voice3"  
+        scene: "interiorNave", 
     },
     { // Diálogo 7
         speaker: "Airaak", 
@@ -1668,14 +1701,9 @@ const dialogosIntroBase = [
     },
     { // Diálogo 11
         speaker: "Airaak",
-        texts: {
-            male: "Tu forma de cuidar a los demás, tu inteligencia y tu profunda capacidad de análisis y de introspección te hacen único. Nunca hemos conocido a un ser humano con una esencia tan pura.",
-            female: "Tu forma de cuidar a los demás, tu inteligencia y tu profunda capacidad de análisis y de introspección te hacen única. Nunca hemos conocido a un ser humano con una esencia tan pura.",
-            nobinary: "Tu forma de cuidar a los demás, tu inteligencia y tu profunda capacidad de análisis y de introspección te hacen excepcional. Nunca hemos conocido a un ser humano con una esencia tan pura."
-        },  
+        texto: "Llevo años viajando por el Cosmos en busca de un Elegido, alguien que nos salve a todos de nuestro destino. En tus ojos veo mucha luz y esperanza para mi pueblo.",
         emotion: "normal",
-        scene: "tornado",
-        voice: "intro-voice8"  
+        scene: "tornado",  
     },
     { // Diálogo 12
         speaker: "Airaak", 
@@ -2456,7 +2484,7 @@ const dialogosNivel4 = [
         speaker: "{player}", 
         texto: "Cada vez llueve más fuerte. No aguantaremos mucho si sigue entrando agua en la barca.",
         emotion: "worried",
-        scene: "underworld3",
+        scene: (character) => `underworld3-${character}`,
     },
     {
         speaker: "Airaak",
@@ -2466,7 +2494,7 @@ const dialogosNivel4 = [
             nobinary: "Estamos entrando en territorio del Gran Oktopo. No estamos solos. Será mejor que no mires esto, tú sigue remando."
         }, 
         emotion: "normal",
-        scene: "underworld4",
+        scene: (character) => `underworld4-${character}`,
     },
     {
         speaker: "Airaak",
@@ -2476,7 +2504,7 @@ const dialogosNivel4 = [
             nobinary: "Los acechadores nocturnos y los vatts voladores viven en la superficie. Aquí corremos un grave peligro, humane. ¡Tenemos que saltar!"
         },  
         emotion: "normal",
-        scene: "underworld5",
+        scene: (character) => `underworld5-${character}`,
     },
     {
         speaker: "Gran Oktopo",
@@ -3896,7 +3924,12 @@ function cambiarUI() {
     console.log("Diálogo actual: ", dialogoActual);
     if (!dialogoActual) return;
 
-    switch(dialogoActual.scene) {
+    const currentScene = 
+        typeof dialogoActual.scene === "function"
+             ? dialogoActual.scene(gameState.characterSelected) 
+             : dialogoActual.scene;
+
+    switch(currentScene) {
 
         case "nave":
             show(naveEspacial);
@@ -4018,8 +4051,16 @@ function cambiarUI() {
             level3Game.classList.add("sunder1");
         break;
 
-        case "sunder2":
-            level3Game.classList.add("sunder2");
+        case "sunder2-female":
+            level3Game.classList.add("sunder2-female");
+        break;
+
+        case "sunder2-male":
+            level3Game.classList.add("sunder2-male");
+        break;
+
+        case "sunder2-nobinary":
+            level3Game.classList.add("sunder2-nobinary");
         break;
 
         case "sunder3":
@@ -4034,8 +4075,16 @@ function cambiarUI() {
             level3Game.classList.add("sunder5");
         break;
 
-        case "sunder6":
-            level3Game.classList.add("sunder6");
+        case "sunder6-female":
+            level3Game.classList.add("sunder6-female");
+        break;
+
+        case "sunder6-male":
+            level3Game.classList.add("sunder6-male");
+        break;
+
+        case "sunder6-nobinary":
+            level3Game.classList.add("sunder6-nobinary");
         break;
 
         case "underworld1":
@@ -4046,16 +4095,40 @@ function cambiarUI() {
             level4Game.classList.add("underworld2");
         break;
 
-        case "underworld3":
-            level4Game.classList.add("underworld3");
+        case "underworld3-female":
+            level4Game.classList.add("underworld3-female");
         break;
 
-        case "underworld4":
-            level4Game.classList.add("underworld4");
+        case "underworld3-male":
+            level4Game.classList.add("underworld3-male");
         break;
 
-        case "underworld5":
-            level4Game.classList.add("underworld5");
+        case "underworld3-nobinary":
+            level4Game.classList.add("underworld3-nobinary");
+        break;
+
+        case "underworld4-female":
+            level4Game.classList.add("underworld4-female");
+        break;
+
+        case "underworld4-male":
+            level4Game.classList.add("underworld4-male");
+        break;
+
+        case "underworld4-nobinary":
+            level4Game.classList.add("underworld4-nobinary");
+        break;
+
+        case "underworld5-female":
+            level4Game.classList.add("underworld5-female");
+        break;
+
+        case "underworld5-male":
+            level4Game.classList.add("underworld5-male");
+        break;
+
+        case "underworld5-nobinary":
+            level4Game.classList.add("underworld5-nobinary");
         break;
 
         case "underworld6":
@@ -5054,6 +5127,9 @@ async function prepareHeleaStory() {
     const startTime = performance.now();    
 
     showUp(storyLoadingPage);
+
+    storyStepChanging.src = `/media/backgrounds/story-of-helea/story14-${gameState.characterSelected}.png`;
+
     startLoadingStory();
     
     try {
@@ -6026,6 +6102,7 @@ instructionsButton.addEventListener("click", () => {
 
 function loadInstructions(level){
 
+    const levelInstructions = createLevelInstructions();
     const stepsData = levelInstructions[level];
 
     currentStep = 0;

@@ -1103,8 +1103,22 @@ h1, h2, h3, button {
   background-size: cover;
 }
 
-#level3-game.sunder2 {
-  background-image: url("/media/backgrounds/level-backgrounds/level3-2.png");
+#level3-game.sunder2-female {
+  background-image: url("/media/backgrounds/level-backgrounds/level3-2-female.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#level3-game.sunder2-male {
+  background-image: url("/media/backgrounds/level-backgrounds/level3-2-male.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#level3-game.sunder2-nobinary {
+  background-image: url("/media/backgrounds/level-backgrounds/level3-2-nobinary.png");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -1131,8 +1145,22 @@ h1, h2, h3, button {
   background-size: cover;
 }
 
-#level3-game.sunder6 {
-  background-image: url("/media/backgrounds/level-backgrounds/level3-6.png");
+#level3-game.sunder6-female {
+  background-image: url("/media/backgrounds/level-backgrounds/level3-6-female.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#level3-game.sunder6-male {
+  background-image: url("/media/backgrounds/level-backgrounds/level3-6-male.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#level3-game.sunder6-nobinary {
+  background-image: url("/media/backgrounds/level-backgrounds/level3-6-nobinary.png");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -1152,22 +1180,64 @@ h1, h2, h3, button {
   background-size: cover;
 }
 
-#level4-game.underworld3 {
-  background-image: url("/media/backgrounds/level-backgrounds/level4-3.png");
+#level4-game.underworld3-female {
+  background-image: url("/media/backgrounds/level-backgrounds/level4-3-female.png");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-#level4-game.underworld4 {
-  background-image: url("/media/backgrounds/level-backgrounds/level4-4.png");
+#level4-game.underworld3-male {
+  background-image: url("/media/backgrounds/level-backgrounds/level4-3-male.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#level4-game.underworld3-nobinary {
+  background-image: url("/media/backgrounds/level-backgrounds/level4-3-nobinary.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#level4-game.underworld4-female {
+  background-image: url("/media/backgrounds/level-backgrounds/level4-4-female.png");
   background-position: left center;
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-#level4-game.underworld5 {
-  background-image: url("/media/backgrounds/level-backgrounds/level4-5.png");
+#level4-game.underworld4-male {
+  background-image: url("/media/backgrounds/level-backgrounds/level4-4-male.png");
+  background-position: left center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#level4-game.underworld4-nobinary {
+  background-image: url("/media/backgrounds/level-backgrounds/level4-4-nobinary.png");
+  background-position: left center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#level4-game.underworld5-female {
+  background-image: url("/media/backgrounds/level-backgrounds/level4-5-female.png");
+  background-position: left center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#level4-game.underworld5-male {
+  background-image: url("/media/backgrounds/level-backgrounds/level4-5-male.png");
+  background-position: left center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#level4-game.underworld5-nobinary {
+  background-image: url("/media/backgrounds/level-backgrounds/level4-5-nobinary.png");
   background-position: left center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -4870,13 +4940,6 @@ footer p {
 
   #play-button {
     width: 150px;
-  }
-
-  /* Mensajes espaciales */
-
-  #audios-birthday {
-    
-    max-height: 370px;
   }
 
   /* Nivel 4 */
