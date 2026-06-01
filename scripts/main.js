@@ -3251,8 +3251,10 @@ selectNameBtn.addEventListener("click", () => {
         return;
     };
 
+    const finalPlayerName = playerName.charAt(0).toUpperCase() + playerName.slice(1); // La primera letra del nombre siempre en mayúsculas
+
     // Si es un nombre correcto, lo guardamos y continuamos
-    gameState.nameCharacter = playerName;
+    gameState.nameCharacter = finalPlayerName;
 
     // Iniciamos los diálogos de la intro después de la configuración inicial
     hideUp(chooseNameBanner);
