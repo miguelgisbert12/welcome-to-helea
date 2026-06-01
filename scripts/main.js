@@ -864,15 +864,6 @@ const easyPlaylist = [
         volumenPropio: 1
     },
     {
-        nombre: "Mala Costumbre",
-        artista: "Chiara Oliver",
-        rutaInicial: "/media/music/level2/easyplaylist/mala-costumbre/first-part.mp3",
-        rutaFinal: "/media/music/level2/easyplaylist/mala-costumbre/second-part.mp3",
-        opciones: ["mes", "tren", "túnel"],
-        correcta: "túnel",
-        volumenPropio: 1
-    },
-    {
         nombre: "Messy",
         artista: "Lola Young",
         rutaInicial: "/media/music/level2/easyplaylist/messy/first-part.mp3",
@@ -909,39 +900,12 @@ const easyPlaylist = [
         volumenPropio: 1
     },
     {
-        nombre: "Close Your Eyes",
-        artista: "RHODES",
-        rutaInicial: "/media/music/level2/easyplaylist/close-your-eyes/first-part.mp3",
-        rutaFinal: "/media/music/level2/easyplaylist/close-your-eyes/second-part.mp3",
-        opciones: ["saw", "know", "run"],
-        correcta: "know",
-        volumenPropio: 1
-    },
-    {
-        nombre: "El Mundo Parece Una Canción de Lapido",
-        artista: "JJ Fuentes",
-        rutaInicial: "/media/music/level2/easyplaylist/el-mundo-parece-una-cancion-de-lapido/first-part.mp3",
-        rutaFinal: "/media/music/level2/easyplaylist/el-mundo-parece-una-cancion-de-lapido/second-part.mp3",
-        opciones: ["despellejan", "desesperan", "atraviesan"],
-        correcta: "despellejan",
-        volumenPropio: 1
-    },
-    {
         nombre: "Locked Away",
         artista: "R. City",
         rutaInicial: "/media/music/level2/easyplaylist/locked-away/first-part.mp3",
         rutaFinal: "/media/music/level2/easyplaylist/locked-away/second-part.mp3",
         opciones: ["sincerely", "wannabe", "honestly"],
         correcta: "honestly",
-        volumenPropio: 1
-    },
-    {
-        nombre: "Mejor Sin Miedo",
-        artista: "Miriam Rodríguez",
-        rutaInicial: "/media/music/level2/easyplaylist/mejor-sin-miedo/first-part.mp3",
-        rutaFinal: "/media/music/level2/easyplaylist/mejor-sin-miedo/second-part.mp3",
-        opciones: ["que me perdió", "se acabó", "se terminó"],
-        correcta: "se terminó",
         volumenPropio: 1
     },
     {
@@ -993,15 +957,6 @@ const normalPlaylist = [
         volumenPropio: 1
     },
     {
-        nombre: "Those Eyes",
-        artista: "New West",
-        rutaInicial: "/media/music/level2/normalplaylist/those-eyes/first-part.mp3",
-        rutaFinal: "/media/music/level2/normalplaylist/those-eyes/second-part.mp3",
-        opciones: ["make me", "show me", "remind me"],
-        correcta: "remind me",
-        volumenPropio: 1
-    },
-    {
         nombre: "Boomerang",
         artista: "Imagine Dragons",
         rutaInicial: "/media/music/level2/normalplaylist/boomerang/first-part.mp3",
@@ -1017,15 +972,6 @@ const normalPlaylist = [
         rutaFinal: "/media/music/level2/normalplaylist/forget-me/second-part.mp3",
         opciones: ["street", "dirt", "silk"],
         correcta: "dirt",
-        volumenPropio: 1
-    },
-    {
-        nombre: "Herbeira",
-        artista: "Andrés Suárez",
-        rutaInicial: "/media/music/level2/normalplaylist/herbeira/first-part.mp3",
-        rutaFinal: "/media/music/level2/normalplaylist/herbeira/second-part.mp3",
-        opciones: ["amanecen", "el campo", "en invierno"],
-        correcta: "en invierno",
         volumenPropio: 1
     },
     {
@@ -1122,30 +1068,12 @@ const hardPlaylist = [
         volumenPropio: 1
     },
     {
-        nombre: "3000 Miles",
-        artista: "Emblem3",
-        rutaInicial: "/media/music/level2/hardplaylist/3000-miles/first-part.mp3",
-        rutaFinal: "/media/music/level2/hardplaylist/3000-miles/second-part.mp3",
-        opciones: ["yesterday", "holidays", "more and more rain"],
-        correcta: "yesterday",
-        volumenPropio: 1
-    },
-    {
         nombre: "Rude",
         artista: "MAGIC!",
         rutaInicial: "/media/music/level2/hardplaylist/rude/first-part.mp3",
         rutaFinal: "/media/music/level2/hardplaylist/rude/second-part.mp3",
         opciones: ["did god bless", "whatcha do", "don't you know"],
         correcta: "don't you know",
-        volumenPropio: 1
-    },
-    {
-        nombre: "Verge",
-        artista: "Owl City",
-        rutaInicial: "/media/music/level2/hardplaylist/verge/first-part.mp3",
-        rutaFinal: "/media/music/level2/hardplaylist/verge/second-part.mp3",
-        opciones: ["the Moon", "the Earth", "the sky"],
-        correcta: "the Earth",
         volumenPropio: 1
     },
     {
@@ -1749,7 +1677,7 @@ const dialogosAbort = [
     { 
         speaker: "{player}",
         texto: ". . .", 
-        emotion: "normal",
+        emotion: "worried",
         scene: "fondoNegro" 
     },
     { 
@@ -3146,7 +3074,7 @@ function updateLoader(progress) {
     realProgress = Math.min(progress * 100, 95);
 };
 
-const initialAssets = [...genericElements, ...mainMenuElements, ...Object.values(personAudios)];
+const initialAssets = [...genericElements, ...mainMenuElements];
 
 const loadingBackground = new Image();
 
@@ -3299,7 +3227,7 @@ selectCharacterBtn.addEventListener("click", () => {
 });
 
 function goToChooseName() {
-    hideUpSlow(selectCharacterBanner);
+    hideUp(selectCharacterBanner);
     selectingCharacter = false;
     selectingName = true;
 
@@ -3327,7 +3255,7 @@ selectNameBtn.addEventListener("click", () => {
     gameState.nameCharacter = playerName;
 
     // Iniciamos los diálogos de la intro después de la configuración inicial
-    hideUpSlow(chooseNameBanner);
+    hideUp(chooseNameBanner);
     runningAnimation = false;
 
     setTimeout(() => {
@@ -4231,7 +4159,7 @@ window.addEventListener("click", () => { // Cuando se haga click en la pantalla
 
         setTimeout(() => {
             showUpSlow(startBanner2);
-            headerInstruccionesTxt.textContent = "Una producción de L&M";
+            headerInstruccionesTxt.textContent = "Una producción de MGR";
             showUpSlow(headerInstrucciones);
             runningAnimation = false;
             instrucciones1 = false;
@@ -6121,6 +6049,7 @@ function loadInstructions(level){
 
 function showStep(index) {
     
+    const levelInstructions = createLevelInstructions();
     const stepsData = levelInstructions[playingLevel];
 
     if(index < 0 || index >= stepsData.length) return;
@@ -6159,6 +6088,7 @@ function showStep(index) {
 
 nextBtn.addEventListener("click", () => {
 
+    const levelInstructions = createLevelInstructions();
     const stepsData = levelInstructions[playingLevel];
 
     if(runningAnimation) return;
