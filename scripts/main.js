@@ -1661,7 +1661,6 @@ const dialogosContinue = [
         }, 
         emotion: "normal",
         scene: "entrandoHelea",
-        voice: "intro-voice11"  
     }
 ];
 
