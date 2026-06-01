@@ -644,6 +644,7 @@ h1, h2, h3, button {
   align-items: center;
   text-align: center;
   width: 100%;
+  transition: opacity 3s ease;
 }
 
 .start-banner p {
@@ -1263,6 +1264,10 @@ h1, h2, h3, button {
 
 #select-character {
   width: 100%;
+}
+
+#select-character, #set-your-name {
+  transition: opacity 0.3s ease !important;
 }
 
 .name-detail {
